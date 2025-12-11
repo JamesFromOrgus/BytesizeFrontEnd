@@ -1,0 +1,39 @@
+import { StatusBar } from 'expo-status-bar';
+import { FlatList, StyleSheet, Text, View, Pressable, Alert } from 'react-native';
+import Button from '../Atoms/Button';
+import styleVariables from '../StyleVariables';
+import { PageProps } from '../App';
+
+export default function StartPage({ setPage }: PageProps) {
+  return (
+    <View style={styles.background}>
+      <View style={{width: 256}}>
+        <Text style={styles.logo_text}>welcome   <Text style={[styles.logo_text, {color: styleVariables.orange}]}>*</Text></Text>
+        <Text style={styles.logo_text}>bytesize.</Text>
+      </View>
+      <View style={{gap: 20, marginTop: 36}}>
+        <Button text={'login'} color={'#5D866C'} action={function (): void {
+          setPage('login');
+        } }></Button>
+        <Button text={'register'} label_color='#000' color={'#FAFAFA'} action={function (): void {
+          Alert.alert("Attempt to register.")
+        } }></Button>
+      </View>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    backgroundColor: styleVariables.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logo_text: {
+    fontSize: 36,
+    fontFamily: 'Montserrat_600SemiBold',
+    color: styleVariables.black,
+  }
+});
