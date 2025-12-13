@@ -16,7 +16,7 @@ export default function LoginPage( {setPage}: PageProps) {
       <View style={{gap: 20, marginTop: 24}}>
         <InputBox placeholder_text='username/email'/>
         <InputBox placeholder_text='password' autocomplete_hint='current-password' obfuscated={true}/>
-        <Button text={'login'} color={styleVariables.green} action={function (): void {
+        <Button text={'login'} color={styleVariables.green} width={300} action={function (): void {
           setError("Not yet implemented.")
         }}/>
         <Button text={'back'} color={styleVariables.orange} height={30} width={60} action={function (): void {
