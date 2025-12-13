@@ -12,10 +12,10 @@ export default function StartPage({ setPage }: PageProps) {
         <Text style={styles.logo_text}>bytesize.</Text>
       </View>
       <View style={{gap: 20, marginTop: 36}}>
-        <Button text={'login'} color={'#5D866C'} action={function (): void {
+        <Button text={'login'} color={styleVariables.green} action={function (): void {
           setPage('login');
         }}/>
-        <Button text={'register'} label_color='#000' color={'#FAFAFA'} action={function (): void {
+        <Button text={'register'} label_color={styleVariables.black} color={styleVariables.white} action={function (): void {
           setPage('register');
         }}/>
       </View>

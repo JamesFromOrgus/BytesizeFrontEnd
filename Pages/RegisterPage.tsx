@@ -3,8 +3,9 @@ import { FlatList, StyleSheet, Text, View, Pressable, Alert } from 'react-native
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import InputBox from '../Atoms/InputBox';
+import { PageProps } from '../App';
 
-export default function RegisterPage() {
+export default function RegisterPage({ setPage }: PageProps) {
   return (
     <View style={styles.background}>
       <View style={{width: 300}}>
@@ -14,8 +15,11 @@ export default function RegisterPage() {
         <InputBox placeholder_text='email' autocomplete_hint='email'/>
         <InputBox placeholder_text='username'/>
         <InputBox placeholder_text='password' obfuscated={true} autocomplete_hint='new-password'/>
-        <Button text={'register'} color={'#5D866C'} action={function (): void {
+        <Button text={'register'} color={styleVariables.green} action={function (): void {
           Alert.alert("Call register endpoint here.")
+        }}/>
+        <Button text={'back'} color={styleVariables.orange} height={30} width={60} action={function (): void {
+          setPage('start');
         }}/>
       </View>
       <StatusBar style="auto" />
