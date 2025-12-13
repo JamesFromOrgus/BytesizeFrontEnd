@@ -4,8 +4,10 @@ import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import InputBox from '../Atoms/InputBox';
 import { PageProps } from '../App';
+import { useState } from 'react';
 
 export default function LoginPage( {setPage}: PageProps) {
+  const [errorMsg, setError] = useState('');
   return (
     <View style={styles.background}>
       <View style={{width: 300}}>
@@ -15,12 +17,13 @@ export default function LoginPage( {setPage}: PageProps) {
         <InputBox placeholder_text='username/email'/>
         <InputBox placeholder_text='password' autocomplete_hint='current-password' obfuscated={true}/>
         <Button text={'login'} color={styleVariables.green} action={function (): void {
-          Alert.alert("Request session token here.")
+          setError("Not yet implemented.")
         }}/>
         <Button text={'back'} color={styleVariables.orange} height={30} width={60} action={function (): void {
           setPage('start');
         }}/>
       </View>
+      {errorMsg.length > 0 && <Text style={styles.error_text}>Error: {errorMsg}</Text>}
       <StatusBar style="auto" />
     </View>
   );
@@ -37,5 +40,11 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontFamily: 'Montserrat_600SemiBold',
     color: styleVariables.black,
+  },
+  error_text: {
+    fontSize: 16,
+    fontFamily: 'Montserrat_600SemiBold',
+    color: styleVariables.error,
+    marginTop: 24
   }
 });

@@ -4,9 +4,11 @@ import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import InputBox from '../Atoms/InputBox';
 import { PageProps } from '../App';
+import { useState } from 'react';
 
 export default function RegisterPage({ setPage }: PageProps) {
-  return (
+    const [errorMsg, setError] = useState('')
+    return (
     <View style={styles.background}>
       <View style={{width: 300}}>
         <Text style={[styles.logo_text, {color: styleVariables.orange}]}>def <Text style={[styles.logo_text]}>create_user():</Text></Text>
@@ -16,12 +18,13 @@ export default function RegisterPage({ setPage }: PageProps) {
         <InputBox placeholder_text='username'/>
         <InputBox placeholder_text='password' obfuscated={true} autocomplete_hint='new-password'/>
         <Button text={'register'} color={styleVariables.green} action={function (): void {
-          Alert.alert("Call register endpoint here.")
+          setError("Not yet implemented.")
         }}/>
         <Button text={'back'} color={styleVariables.orange} height={30} width={60} action={function (): void {
           setPage('start');
         }}/>
       </View>
+      {errorMsg.length > 0 && <Text style={styles.error_text}>Error: {errorMsg}</Text>}
       <StatusBar style="auto" />
     </View>
   );
@@ -38,5 +41,11 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontFamily: 'Montserrat_600SemiBold',
     color: styleVariables.black,
+  },
+  error_text: {
+    fontSize: 16,
+    fontFamily: 'Montserrat_600SemiBold',
+    color: styleVariables.error,
+    marginTop: 24
   }
 });

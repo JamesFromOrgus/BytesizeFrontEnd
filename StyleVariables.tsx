@@ -6,6 +6,7 @@ const styleVariables = {
     blue: '#55ACDC',
     grey: '#CBCACA',
     active_green: '#7AA68A',
-    active_blue: '#7EC1E6'
+    active_blue: '#7EC1E6',
+    error: '#F55'
 }
 export default styleVariables;
