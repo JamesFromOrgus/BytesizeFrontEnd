@@ -1,19 +1,25 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import styleVariables from '../StyleVariables';
+import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
 
 type ButtonData = {
     text: string,
     color: string,
     label_color?: string,
     action: () => void
+    width?: Int32,
+    height?: Int32
 }
 
-export default function Button({ text, color, label_color, action }: ButtonData) {
+export default function Button({ text, color, label_color, action, width, height }: ButtonData) {
     const default_label_color = '#fff'
+    width = width ?? styles.button_container['width'];
+    height = height ?? styles.button_container['height'];
+    const container_style = {width: width, height: height}
     return (
-        <View style={[styles.button_container, {backgroundColor: color}]}>
+        <View style={[styles.button_container, {backgroundColor: color}, container_style]}>
             <Pressable style={styles.button} onPress={action}>
-                <Text style={[styles.button_label, {color: label_color ?? default_label_color}]}>{text}</Text>
+                <Text style={[styles.button_label, {color: label_color ?? default_label_color, fontSize: height/2}]}>{text}</Text>
             </Pressable>
         </View>
     );
@@ -37,7 +43,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   button_label: {
-    fontSize: 20,
     fontFamily: 'Montserrat_600SemiBold',
   }
 });

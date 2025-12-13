@@ -14,10 +14,10 @@ export default function StartPage({ setPage }: PageProps) {
       <View style={{gap: 20, marginTop: 36}}>
         <Button text={'login'} color={'#5D866C'} action={function (): void {
           setPage('login');
-        } }></Button>
+        }}/>
         <Button text={'register'} label_color='#000' color={'#FAFAFA'} action={function (): void {
-          Alert.alert("Attempt to register.")
-        } }></Button>
+          setPage('register');
+        }}/>
       </View>
       <StatusBar style="auto" />
     </View>

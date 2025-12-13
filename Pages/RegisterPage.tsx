@@ -4,17 +4,18 @@ import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import InputBox from '../Atoms/InputBox';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <View style={styles.background}>
       <View style={{width: 300}}>
-        <Text style={[styles.logo_text, {color: styleVariables.orange}]}>return<Text style={[styles.logo_text]}>ing user?</Text></Text>
+        <Text style={[styles.logo_text, {color: styleVariables.orange}]}>def <Text style={[styles.logo_text]}>create_user():</Text></Text>
       </View>
       <View style={{gap: 20, marginTop: 24}}>
-        <InputBox placeholder_text='username/email'/>
-        <InputBox placeholder_text='password' autocomplete_hint='current-password' obfuscated={true}/>
-        <Button text={'login'} color={'#5D866C'} action={function (): void {
-          Alert.alert("Request session token here.")
+        <InputBox placeholder_text='email' autocomplete_hint='email'/>
+        <InputBox placeholder_text='username'/>
+        <InputBox placeholder_text='password' obfuscated={true} autocomplete_hint='new-password'/>
+        <Button text={'register'} color={'#5D866C'} action={function (): void {
+          Alert.alert("Call register endpoint here.")
         }}/>
       </View>
       <StatusBar style="auto" />
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logo_text: {
-    fontSize: 36,
+    fontSize: 32,
     fontFamily: 'Montserrat_600SemiBold',
     color: styleVariables.black,
   }
