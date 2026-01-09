@@ -49,12 +49,12 @@ export default function App() {
   };
 
   // Your existing API: pages call setPage('login') etc.
-  // ✅ Patched: if user swiped back, discard "future" pages before navigating.
+  // Patched: if user swiped back, discard "future" pages before navigating.
   const setPage: PageProps['setPage'] = (next) => {
     const target = resolveNext(next);
 
     setStack((prevStack): PageName[] => {
-      // ✅ IMPORTANT: if user swiped back, throw away "future" pages
+      // IMPORTANT: if user swiped back, throw away "future" pages
       const baseStack: PageName[] = prevStack.slice(0, currentIndex + 1);
 
       const last = baseStack[baseStack.length - 1];
