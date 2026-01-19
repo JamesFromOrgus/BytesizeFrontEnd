@@ -127,6 +127,11 @@ export default function App() {
     if (idx > currentIndex) {
       scrollTo(currentIndex);
       return;
+    } else if (idx < currentIndex) {
+      setStack((prevStack): PageName[] => {
+        const trimmed = prevStack.slice(0, -1);
+        return trimmed;
+      })
     }
 
     // Back swipe allowed
