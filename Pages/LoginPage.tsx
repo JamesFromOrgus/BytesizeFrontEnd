@@ -10,6 +10,9 @@ export default function LoginPage( {setPage}: PageProps) {
   const [errorMsg, setError] = useState('');
   return (
     <View style={styles.background}>
+      {/* Asset Import 
+      bytesize. pattern */}
+
       <Image source={require('../assets/pattern-black.png')}
         style={{
           position: 'absolute',
@@ -17,6 +20,19 @@ export default function LoginPage( {setPage}: PageProps) {
           left: 0,
           right: 0,
           height: 107,
+          zIndex: 10,
+        }}
+        resizeMode="contain"
+        />
+
+      {/* Bottom Background Graph*/ }
+      <Image source={require('../assets/graph-cat.png')}
+        style={{
+          position: 'absolute',
+          top: 560,
+          left: -10,
+          right: 0,
+          height: 300,
           zIndex: 10,
         }}
         resizeMode="contain"
