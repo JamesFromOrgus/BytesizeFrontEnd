@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, StyleSheet, Text, View, Pressable, Alert } from 'react-native';
+import { FlatList, StyleSheet, Text, View, Pressable, Alert, Image } from 'react-native';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import InputBox from '../Atoms/InputBox';
@@ -10,6 +10,34 @@ export default function LoginPage( {setPage}: PageProps) {
   const [errorMsg, setError] = useState('');
   return (
     <View style={styles.background}>
+      {/* Asset Import 
+      bytesize. pattern */}
+
+      <Image source={require('../assets/pattern-black.png')}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 107,
+          zIndex: 10,
+        }}
+        resizeMode="contain"
+        />
+
+      {/* Bottom Background Graph*/ }
+      <Image source={require('../assets/graph-cat.png')}
+        style={{
+          position: 'absolute',
+          top: 560,
+          left: -10,
+          right: 0,
+          height: 300,
+          zIndex: 10,
+        }}
+        resizeMode="contain"
+        />
+
       <View style={{width: 300}}>
         <Text style={[styles.logo_text, {color: styleVariables.orange}]}>return<Text style={[styles.logo_text]}>ing user?</Text></Text>
       </View>
@@ -17,10 +45,7 @@ export default function LoginPage( {setPage}: PageProps) {
         <InputBox placeholder_text='username/email'/>
         <InputBox placeholder_text='password' autocomplete_hint='current-password' obfuscated={true}/>
         <Button text={'login'} color={styleVariables.green} width={300} action={function (): void {
-          setError("Not yet implemented.")
-        }}/>
-        <Button text={'back'} color={styleVariables.orange} height={30} width={60} action={function (): void {
-          setPage('start');
+          setPage('onboarding')
         }}/>
       </View>
       {errorMsg.length > 0 && <Text style={styles.error_text}>Error: {errorMsg}</Text>}
