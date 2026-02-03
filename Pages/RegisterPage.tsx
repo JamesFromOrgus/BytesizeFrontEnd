@@ -10,6 +10,9 @@ export default function RegisterPage({ setPage }: PageProps) {
     const [errorMsg, setError] = useState('')
     return (
     <View style={styles.background}>
+      {/* Asset Import 
+      bytesize. pattern */}
+
       <Image source={require('../assets/pattern-black.png')}
         style={{
           position: 'absolute',
@@ -21,7 +24,19 @@ export default function RegisterPage({ setPage }: PageProps) {
         }}
         resizeMode="contain"
         />
-        
+
+      {/* Bottom Background Graph*/ }
+      <Image source={require('../assets/graph-cat.png')}
+        style={{
+          position: 'absolute',
+          top: 560,
+          left: -10,
+          right: 0,
+          height: 300,
+          zIndex: 10,
+        }}
+        resizeMode="contain"
+        />
       <View style={{width: 300}}>
         <Text style={[styles.logo_text, {color: styleVariables.orange}]}>def <Text style={[styles.logo_text]}>create_user():</Text></Text>
       </View>
@@ -30,10 +45,7 @@ export default function RegisterPage({ setPage }: PageProps) {
         <InputBox placeholder_text='username'/>
         <InputBox placeholder_text='password' obfuscated={true} autocomplete_hint='new-password'/>
         <Button text={'register'} width={300} color={styleVariables.green} action={function (): void {
-          setError("Not yet implemented.")
-        }}/>
-        <Button text={'back'} color={styleVariables.orange} height={30} width={60} action={function (): void {
-          setPage('start');
+          setPage('onboarding')
         }}/>
       </View>
       {errorMsg.length > 0 && <Text style={styles.error_text}>Error: {errorMsg}</Text>}

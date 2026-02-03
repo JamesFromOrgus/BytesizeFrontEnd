@@ -33,8 +33,7 @@ export default function OnboardingPage( {setPage}: PageProps) {
 
             <View style={{marginTop: 64}}>
                 <Button text={'fly to the sky'} width={300}
-                label_color={styleVariables.black} color={styleVariables.white} 
-                action={function (): void {setError("Not yet implemented.")}}/>
+                label_color={styleVariables.black} color={styleVariables.white} action={function (): void {setPage('home')}}/>
             </View>
 
             {errorMsg.length > 0 && <Text style={styles.error_text}>Error: {errorMsg}</Text>}
