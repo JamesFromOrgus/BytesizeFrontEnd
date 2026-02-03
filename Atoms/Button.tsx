@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Pressable, Image, ImageSourcePropType } from 'react-native';
 import styleVariables from '../StyleVariables';
+import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
 
 type ButtonData = {
     text?: string, 
