@@ -1,25 +1,39 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Image, ImageSourcePropType } from 'react-native';
 import styleVariables from '../StyleVariables';
-import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
 
 type ButtonData = {
-    text: string,
+    text?: string, 
     color: string,
     label_color?: string,
-    action: () => void
-    width?: Int32,
-    height?: Int32
+    action: () => void,
+    width?: number,
+    height?: number,
+    image_source?: ImageSourcePropType
 }
 
-export default function Button({ text, color, label_color, action, width, height }: ButtonData) {
-    const default_label_color = '#fff'
-    width = width ?? styles.button_container['width'];
-    height = height ?? styles.button_container['height'];
-    const container_style = {width: width, height: height}
+export default function Button({ text, color, label_color, action, width, height, image_source }: ButtonData) {
+    const default_label_color = '#fff';
+    const finalWidth = width ?? (styles.button_container.width as number);
+    const finalHeight = height ?? (styles.button_container.height as number);
+    const container_style = { width: finalWidth, height: finalHeight };
+
     return (
-        <View style={[styles.button_container, {backgroundColor: color}, container_style]}>
+        <View style={[styles.button_container, { backgroundColor: color }, container_style]}>
             <Pressable style={styles.button} onPress={action}>
-                <Text style={[styles.button_label, {color: label_color ?? default_label_color, fontSize: height/2}]}>{text}</Text>
+                {image_source ? (
+                    <Image 
+                        source={image_source} 
+                        style={{ width: finalHeight * 0.7, height: finalHeight * 0.7 }} 
+                        resizeMode="contain" 
+                    />
+                ) : (
+                    <Text style={[
+                        styles.button_label, 
+                        { color: label_color ?? default_label_color, fontSize: finalHeight / 2.2 }
+                    ]}>
+                        {text}
+                    </Text>
+                )}
             </Pressable>
         </View>
     );
@@ -27,13 +41,13 @@ export default function Button({ text, color, label_color, action, width, height
 
 const styles = StyleSheet.create({
   button_container: {
-    outlineWidth: 2,
-    outlineColor: styleVariables.black,
+    borderWidth: 2,
+    borderColor: styleVariables.black,
     width: 250,
     height: 42,
-    opacity: 1,
-    borderRadius: 16
-  },
+    borderRadius: 16,
+    overflow: 'hidden',
+    },
    button: {
     borderRadius: 10,
     width: '100%',

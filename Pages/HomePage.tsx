@@ -54,20 +54,18 @@ export default function HomePage({ setPage }: PageProps) {
       {/* bottom navigation*/}
       <View style={styles.navBar}>
         <Button 
-          text="home" 
-          color={styleVariables.white} 
-          label_color={styleVariables.black} 
-          width={100} 
-          height={40} 
-          action={() => setPage('start')} 
+          image_source={require('../assets/home-selected-icon.png')}
+          color={'transparent'}
+          width={60} 
+          height={60} 
+          action={() => setPage('home')} // I really don't know if this code should really exist if it goes to itself
         />
         <Button 
-          text="settings" 
-          color={styleVariables.white} 
-          label_color={styleVariables.black} 
-          width={100} 
-          height={40} 
-          action={() => {}} 
+          image_source={require('../assets/accounts-icon.png')}
+          color={'transparent'} 
+          width={60} 
+          height={60} 
+          action={() => setPage('account')} 
         />
       </View>
 

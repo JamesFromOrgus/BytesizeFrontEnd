@@ -4,14 +4,14 @@ import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 
-export default function CourseLessonsPage({ setPage }: PageProps) {
-  return (
-    <View style={styles.background}>
-      <Text style={styles.h2Black}>Course Lessons Page</Text>
-
-      <StatusBar style="auto" />
-    </View>
-  );
+export default function CoursePage({ setPage }: PageProps) {
+    return (
+        <View style={styles.background}>
+           <Text style={styles.h2Black}>Course Lessons Page</Text>
+       
+            <StatusBar style="auto" />
+           </View>
+     );
 }
 
 const styles = StyleSheet.create({
