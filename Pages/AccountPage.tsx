@@ -16,6 +16,9 @@ export default function AccountPage({ setPage }: PageProps) {
           <Text style={[styles.levelText, { color: '#ccc' }]}>level 5</Text>
         </View>
 
+        <View style={styles.progressBar}></View>
+
+
         <View style={styles.xpRow}>
           <Text style={styles.xpText}>3236xp</Text>
           <Text style={styles.xpText}>6550xp</Text>
@@ -146,5 +149,13 @@ const styles = StyleSheet.create({
     backgroundColor: styleVariables.white,
     borderTopWidth: 2,
     borderColor: styleVariables.black,
-  }
+  },
+  progressBar: {
+   height: 20,
+   width: '100%',
+   backgroundColor: 'white',
+   borderColor: '#0D0C0C',
+   borderWidth: 2,
+   borderRadius: 5
+ }
 });
