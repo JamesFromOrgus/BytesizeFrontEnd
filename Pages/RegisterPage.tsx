@@ -44,8 +44,7 @@ export default function RegisterPage({ setPage }: PageProps) {
         <InputBox placeholder_text='email' autocomplete_hint='email'/>
         <InputBox placeholder_text='username'/>
         <InputBox placeholder_text='password' obfuscated={true} autocomplete_hint='new-password'/>
-        <Button text={'register'} width={300} color={styleVariables.green} action={function (): void {
-          setPage('onboarding')
+        <Button text={'register'} color={styleVariables.green} width={300} action={function (): void { setPage('onboarding')
         }}/>
       </View>
       {errorMsg.length > 0 && <Text style={styles.error_text}>Error: {errorMsg}</Text>}

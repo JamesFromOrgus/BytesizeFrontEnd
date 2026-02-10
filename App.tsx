@@ -14,7 +14,7 @@ import RegisterPage from './Pages/RegisterPage';
 import OnboardingPage from './Pages/OnboardingPage';
 import HomePage from './Pages/HomePage';
 import AccountPage from './Pages/AccountPage';
-import CoursePage from './Pages/CourseLessonsPage'
+import CoursePage from './Pages/CourseLessonsPage';
 
 const pages = {
   start: StartPage,

@@ -41,13 +41,23 @@ export default function HomePage({ setPage }: PageProps) {
 
         {/* course list */}
         {COURSES.map((course) => (
-          <View key={course.id} style={[styles.courseItem, { backgroundColor: course.color }]}>
-            <View style={styles.iconBox} />
-            <View>
-              <Text style={styles.courseTitle}>{course.title}</Text>
-              <Text style={styles.courseSub}>{course.lessons} lessons</Text>
-            </View>
+          <Pressable 
+          key={course.id} 
+          onPress={() => setPage('course')}
+          style={({ pressed }) => [
+            styles.courseItem, 
+            { 
+              backgroundColor: course.color,
+              opacity: pressed ? 0.9 : 1 // Adds a tap effect
+            }
+          ]}
+        >
+          <View style={styles.iconBox} />
+          <View>
+            <Text style={styles.courseTitle}>{course.title}</Text>
+            <Text style={styles.courseSub}>{course.lessons} lessons</Text>
           </View>
+        </Pressable>
         ))}
       </ScrollView>
 
