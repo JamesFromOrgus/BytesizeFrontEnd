@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable, Animated } from 'react-native';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
@@ -25,6 +25,11 @@ export default function HomePage({ setPage }: PageProps) {
             <Text style={styles.badgeText}>in progress</Text>
           </View>
           <Text style={styles.featuredTitle}>single variable calculus for beginners</Text>
+
+          <View style={styles.progressBar}>
+            <Animated.View style={[StyleSheet.absoluteFill, {backgroundColor: styleVariables.black, width: "50%"}]}/>
+          </View>
+
           <View style={styles.centerButton}>
             <Button 
                 text="continue" 
@@ -120,7 +125,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat_600SemiBold',
     fontSize: 24,
     color: styleVariables.white,
-    marginBottom: 20,
   },
   centerButton: {
     alignItems: 'center',
@@ -168,5 +172,16 @@ const styles = StyleSheet.create({
     backgroundColor: styleVariables.white,
     borderTopWidth: 2,
     borderColor: styleVariables.black,
-  }
+  },
+  progressBar: {
+    height: 28,
+    width: '100%',
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 14, // the rounded shape
+    overflow: 'hidden',
+    marginVertical: 15,
+  },
+
 });
