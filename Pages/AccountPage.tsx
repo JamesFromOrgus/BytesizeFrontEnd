@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Animated, Image } from 'react-native';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
@@ -8,16 +8,27 @@ export default function AccountPage({ setPage }: PageProps) {
   return (
     <View style={styles.container}>
       {/* Profile header section */}
+      <Text style={[styles.starIcon, {color: styleVariables.orange}]}>   *</Text>
+
       <View style={styles.header}>
+
+        <View style={styles.avatarContainer}>
+        <Image 
+          source={require('../assets/cartoonpfp.jpg')} 
+          style={styles.avatar} 
+        />
+        </View>  
+
         <Text style={styles.userName}>whupazz</Text>
         
         <View style={styles.levelRow}>
-          <Text style={styles.levelText}>level 6</Text>
-          <Text style={[styles.levelText, { color: '#ccc' }]}>level 5</Text>
+          <Text style={styles.levelText}>level 4</Text>
+          <Text style={[styles.levelText, { color: 'grey' }]}>level 5</Text>
         </View>
 
-        <View style={styles.progressBar}></View>
-
+        <View style={styles.progressBar}>
+          <Animated.View style={[StyleSheet.absoluteFill, {backgroundColor: styleVariables.green, width: "50%"}]}/>
+        </View>
 
         <View style={styles.xpRow}>
           <Text style={styles.xpText}>3236xp</Text>
@@ -48,7 +59,7 @@ export default function AccountPage({ setPage }: PageProps) {
           color={styleVariables.green} 
           width={250} 
           height={45} 
-          action={() => {}} 
+          action={() => setPage('settings')} 
         />
       </View>
 
@@ -78,64 +89,90 @@ export default function AccountPage({ setPage }: PageProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: styleVariables.white,
+    backgroundColor: 'white',
     paddingHorizontal: 25,
     paddingTop: 80,
   },
-  header: {
-    marginBottom: 30,
+  starIcon: {
+    fontFamily: 'Montserrat_600SemiBold',
+    position: 'absolute',
+    top: 60,
+    right: 25,
+    fontSize: 80,
+    color: 'orange',
+    fontWeight: '300',
+  },
+  avatarContainer: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    borderWidth: 3,
+    borderColor: 'black',
+    overflow: 'hidden',
+    marginBottom: 20,
+  },
+  avatar: {
+    width: '100%',
+    height: '100%',
   },
   userName: {
     fontFamily: 'Montserrat_600SemiBold',
-    fontSize: 42,
-    color: styleVariables.black,
+    fontSize: 36,
+    color: 'black',
+    fontweight: 600,
+    letterSpacing: -1,
   },
   levelRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginBottom: 8,
   },
   levelText: {
     fontFamily: 'Montserrat_600SemiBold',
-    fontSize: 18,
+    fontSize: 22,
+  },
+  progressBar: {
+    height: 28,
+    width: '100%',
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 14, // the rounded shape
+    overflow: 'hidden',
   },
   xpRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 5,
+    marginTop: 6,
   },
   xpText: {
     fontFamily: 'Montserrat_600SemiBold',
-    fontSize: 14,
+    fontSize: 16,
   },
   statsSection: {
-    marginTop: 20,
+    marginTop: 30,
   },
   sectionHeader: {
     fontFamily: 'Montserrat_600SemiBold',
-    fontSize: 28,
-    color: styleVariables.black,
+    fontSize: 24,
+    color: 'black',
   },
   statLine: {
     height: 3,
-    backgroundColor: styleVariables.black,
+    backgroundColor: 'black',
     marginTop: 5,
     marginBottom: 20,
   },
   statRow: {
-    marginBottom: 10,
+    marginBottom: 12,
   },
   statLabel: {
     fontFamily: 'Montserrat_600SemiBold',
-    fontSize: 20,
-    color: styleVariables.black,
+    fontSize: 16,
+    color: 'black',
   },
   statValue: {
-    color: styleVariables.orange,
-  },
-  centerButton: {
-    alignItems: 'center',
-    marginTop: 50,
+    color: 'orange',
   },
   navBar: {
     position: 'absolute',
@@ -150,12 +187,4 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderColor: styleVariables.black,
   },
-  progressBar: {
-   height: 20,
-   width: '100%',
-   backgroundColor: 'white',
-   borderColor: '#0D0C0C',
-   borderWidth: 2,
-   borderRadius: 5
- }
 });

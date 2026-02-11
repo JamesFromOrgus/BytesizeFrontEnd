@@ -15,6 +15,7 @@ import OnboardingPage from './Pages/OnboardingPage';
 import HomePage from './Pages/HomePage';
 import AccountPage from './Pages/AccountPage';
 import CoursePage from './Pages/CourseLessonsPage';
+import SettingsPage from './Pages/SettingsPage';
 
 const pages = {
   start: StartPage,
@@ -23,7 +24,8 @@ const pages = {
   onboarding: OnboardingPage,
   home: HomePage,
   account: AccountPage,
-  course: CoursePage
+  course: CoursePage,
+  settings: SettingsPage
 } as const;
 
 type PageName = keyof typeof pages;
