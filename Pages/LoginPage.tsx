@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, StyleSheet, Text, View, Pressable, Alert, Image } from 'react-native';
+import { FlatList, StyleSheet, Text, View, Pressable, Alert, Image, useWindowDimensions } from 'react-native';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import InputBox from '../Atoms/InputBox';
@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 export default function LoginPage( {setPage}: PageProps) {
   const [errorMsg, setError] = useState('');
+  const { height,width } = useWindowDimensions(); // Needed for fine control on adataptive sizing for elements
   return (
     <View style={styles.background}>
       {/* Asset Import 
@@ -25,18 +26,18 @@ export default function LoginPage( {setPage}: PageProps) {
         resizeMode="contain"
         />
 
-      {/* Bottom Background Graph*/ }
-      <Image source={require('../assets/graph-cat.png')}
+      {/* Bottom Background Graph */}
+      <Image 
+        source={require('../assets/graph-cat.png')}
         style={{
           position: 'absolute',
-          top: 560,
-          left: -10,
-          right: 0,
-          height: 300,
-          zIndex: 10,
+          bottom: 0,
+          width: width * 0.9, 
+          aspectRatio: 1, 
+          zIndex: 1, 
         }}
-        resizeMode="contain"
-        />
+       resizeMode="contain" 
+      />
 
       <View style={{width: 300}}>
         <Text style={[styles.logo_text, {color: styleVariables.orange}]}>return<Text style={[styles.logo_text]}>ing user?</Text></Text>

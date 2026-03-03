@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, StyleSheet, Text, View, Pressable, Alert, Image } from 'react-native';
+import { FlatList, StyleSheet, Text, View, Pressable, Alert, Image, useWindowDimensions } from 'react-native';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import InputBox from '../Atoms/InputBox';
@@ -8,6 +8,8 @@ import { useState } from 'react';
 
 export default function RegisterPage({ setPage }: PageProps) {
     const [errorMsg, setError] = useState('')
+    const { height,width } = useWindowDimensions(); // Needed for fine control on adataptive sizing for elements 
+    
     return (
     <View style={styles.background}>
       {/* Asset Import 
@@ -25,18 +27,22 @@ export default function RegisterPage({ setPage }: PageProps) {
         resizeMode="contain"
         />
 
-      {/* Bottom Background Graph*/ }
-      <Image source={require('../assets/graph-cat.png')}
+      {/* Bottom Background Graph */}
+      <Image 
+        source={require('../assets/graph-cat.png')}
         style={{
           position: 'absolute',
-          top: 560,
-          left: -10,
-          right: 0,
-          height: 300,
-          zIndex: 10,
+          bottom: 0,
+
+          // 1. Use a percentage so it's always 80% of the screen width
+          width: width * 0.9, 
+          aspectRatio: 1, 
+          zIndex: 1, 
         }}
-        resizeMode="contain"
-        />
+      // 4. 'cover' forces the image to fill the width * 0.8 box entirely
+       resizeMode="contain" 
+      />
+
       <View style={{width: 300}}>
         <Text style={[styles.logo_text, {color: styleVariables.orange}]}>def <Text style={[styles.logo_text]}>create_user():</Text></Text>
       </View>
