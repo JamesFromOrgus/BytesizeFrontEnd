@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   statValue: {
-    color: 'orange',
+    color: styleVariables.orange,
   },
   navBar: {
     position: 'absolute',
