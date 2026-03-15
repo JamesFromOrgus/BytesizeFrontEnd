@@ -22,6 +22,36 @@ const lessons = [
     title: "lesson 3\noperators",
     description: "learn about special symbols in python that perform actions on values and variables.",
     status: "not started",
+  },
+  {
+    id: "4",
+    title: "lesson 4\nconditionals",
+    description: "learn about conditional statements in python to make program decisions.",
+    status: "not started"
+  },
+  {
+    id: "5",
+    title: "lesson 5\nloops",
+    description: "in the lesson you will learn how to use loops with python, and demistify for and while keywords.",
+    status: "not started"
+  },
+  {
+    id: "6",
+    title: "lesson 6\ninput",
+    description: "this lesson will teach you how to take input from users and apply it in your programs.",
+    status: "not started"
+  },
+  {
+    id: "7",
+    title: "lesson 7\nvariables",
+    description: "learn how to use variables in python extensively.",
+    status: "not started"
+  },
+  {
+    id: "8",
+    title: "lesson 8\nlists",
+    description: "learn how to use lists and data structures in python.",
+    status: "not started"
   }
 ];
 
