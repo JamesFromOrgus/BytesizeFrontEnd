@@ -8,7 +8,13 @@ export default function CoursePage({ setPage }: PageProps) {
     return (
         <View style={styles.background}>
            <Text style={styles.h2Black}>Course Lessons Page</Text>
-       
+
+           <Button
+             text="complete lesson"
+             color={styleVariables.green}
+             action={() => setPage('success')}
+           />
+
             <StatusBar style="auto" />
            </View>
      );

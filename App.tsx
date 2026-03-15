@@ -15,6 +15,7 @@ import OnboardingPage from './Pages/OnboardingPage';
 import HomePage from './Pages/HomePage';
 import AccountPage from './Pages/AccountPage';
 import CoursePage from './Pages/CourseLessonsPage';
+import LessonSuccessPage from './Pages/LessonSuccessPage';
 import SettingsPage from './Pages/SettingsPage';
 
 const pages = {
@@ -25,6 +26,7 @@ const pages = {
   home: HomePage,
   account: AccountPage,
   course: CoursePage,
+  success: LessonSuccessPage,
   settings: SettingsPage
 } as const;
 
