@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, StyleSheet, Text, View, Pressable, Alert, Image, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Image, useWindowDimensions } from 'react-native';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import InputBox from '../Atoms/InputBox';
@@ -9,6 +9,7 @@ import { useState } from 'react';
 export default function LoginPage( {setPage}: PageProps) {
   const [errorMsg, setError] = useState('');
   const { height,width } = useWindowDimensions(); // Needed for fine control on adataptive sizing for elements
+  
   return (
     <View style={styles.background}>
       {/* Asset Import 
@@ -19,11 +20,11 @@ export default function LoginPage( {setPage}: PageProps) {
           position: 'absolute',
           top: 0,
           left: 0,
-          right: 0,
+          width: width,
           height: 107,
           zIndex: 10,
         }}
-        resizeMode="contain"
+        resizeMode="cover"
         />
 
       {/* Bottom Background Graph */}

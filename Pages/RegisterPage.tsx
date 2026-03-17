@@ -20,11 +20,11 @@ export default function RegisterPage({ setPage }: PageProps) {
           position: 'absolute',
           top: 0,
           left: 0,
-          right: 0,
+          width: width,
           height: 107,
           zIndex: 10,
         }}
-        resizeMode="contain"
+        resizeMode="cover"
         />
 
       {/* Bottom Background Graph */}
