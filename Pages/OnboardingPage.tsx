@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, StyleSheet, Text, View, Pressable, Alert, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, useWindowDimensions } from 'react-native';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 import { useState } from 'react';
 
 export default function OnboardingPage( {setPage}: PageProps) {
-    const [errorMsg, setError] = useState('');
+const [errorMsg, setError] = useState('');
+const { height,width } = useWindowDimensions(); // Needed for fine control on adataptive sizing for elements
     return (
         <View style={styles.background}>
             <Image source={require('../assets/pattern.png')}
@@ -14,11 +15,11 @@ export default function OnboardingPage( {setPage}: PageProps) {
                     position: 'absolute',
                     top: 0,
                     left: 0,
-                    right: 0,
+                    width: width, 
                     height: 107,
                     zIndex: 10,
                 }}
-                resizeMode="contain"
+                resizeMode="cover"
                 />
 
             {/* Creates main text*/}

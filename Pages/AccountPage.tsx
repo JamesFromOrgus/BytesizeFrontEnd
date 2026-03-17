@@ -1,10 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Animated, Image } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Animated, Image, Pressable, Modal, useWindowDimensions } from 'react-native';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 
 export default function AccountPage({ setPage }: PageProps) { 
+  const { width, height } = useWindowDimensions();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedPfp, setSelectedPfp] = useState(require('../assets/cartoonpfp.jpg')); // variable to track the picture currently being held as selected
+  const alternativePfps = [
+    require('../assets/cartoonpfp-2.jpg'),
+    require('../assets/cartoonpfp-3.jpg'),
+    require('../assets/cartoonpfp-4.jpg'),
+  ];
+
+
   return (
     <View style={styles.container}>
       {/* Profile header section */}
@@ -12,12 +23,14 @@ export default function AccountPage({ setPage }: PageProps) {
 
       <View style={styles.header}>
 
-        <View style={styles.avatarContainer}>
-        <Image 
-          source={require('../assets/cartoonpfp.jpg')} 
-          style={styles.avatar} 
-        />
-        </View>  
+        <Pressable onPress={() => setIsModalVisible(true)}>
+          <View style={styles.avatarContainer}>
+            <Image 
+              source={require('../assets/cartoonpfp.jpg')} // Main page picture (unchanged for now as requested)
+              style={styles.avatar} 
+            />
+          </View>
+        </Pressable>  
 
         <Text style={styles.userName}>whupazz</Text>
         
@@ -77,10 +90,67 @@ export default function AccountPage({ setPage }: PageProps) {
           color={'transparent'} 
           width={60} 
           height={60} 
-          action={() => {}} 
+          action={() => setPage('account')} 
         />
       </View>
 
+      {/*Profile Picture modal popup */}
+      <Modal
+        visible={isModalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setIsModalVisible(false)}
+      >
+        <View style={styles.modal_overlay}>
+          <View style={[styles.modal_content, { width: width * 0.9, height: height * 0.75 }]} //variable size
+          >
+
+            {/*back arrow */}
+            <View style={styles.modal_top_section}>
+              <Pressable onPress={() => setIsModalVisible(false)} style={styles.modal_back_button}>
+                <Image 
+                  source={require('../assets/back-arrow.png')} 
+                  style={styles.back_arrow_image} 
+                  resizeMode="contain" 
+                />
+              </Pressable>
+              
+              {/*Selected avatar */}
+              <View style={styles.modal_big_avatar_container}>
+                <Image source={selectedPfp} style={styles.avatar} />
+              </View>
+            </View>
+
+
+            <View style={styles.modal_horizontal_line} // breaker line
+            />
+
+
+            <View style={styles.modal_bottom_section}>
+              {/*Row of other profile pictures */}
+              <View style={styles.pfp_options_row}>
+                {alternativePfps.map((img, index) => (
+                  <Pressable 
+                    key={index} 
+                    onPress={() => setSelectedPfp(img)} // Updates the big picture in the modal
+                    style={styles.modal_small_avatar_container}
+                  >
+
+                    <Image source={img} style={styles.avatar} />
+                  </Pressable>
+                ))}
+              </View>
+
+              {/*Save Button */}
+              <Pressable style={styles.modal_save_button} onPress={() => setIsModalVisible(false)}>
+                <Text style={styles.modal_save_text}>save changes</Text>
+              </Pressable>
+
+            </View>
+
+          </View>
+        </View>
+      </Modal>
       <StatusBar style="auto" />
     </View>
   );
@@ -119,7 +189,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat_600SemiBold',
     fontSize: 36,
     color: 'black',
-    fontweight: 600,
+    fontWeight: '600',
     letterSpacing: -1,
   },
   levelRow: {
@@ -174,6 +244,10 @@ const styles = StyleSheet.create({
   statValue: {
     color: styleVariables.orange,
   },
+  centerButton: {
+    marginTop: 30,
+    alignItems: 'center',
+  },
   navBar: {
     position: 'absolute',
     bottom: 0,
@@ -187,4 +261,82 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderColor: styleVariables.black,
   },
+  modal_overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // darkening of background for popup
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modal_content: {
+    backgroundColor: styleVariables.white,
+    borderRadius: 20,
+    borderWidth: 4,
+    borderColor: styleVariables.black,
+    overflow: 'hidden', //Ensures the line touches the edge
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  modal_top_section: {
+    flex: 1,
+    padding: 20,
+    alignItems: 'center',
+    backgroundColor: styleVariables.white,
+  },
+  modal_back_button: {
+    alignSelf: 'flex-start',
+    marginBottom: 20,
+  },
+  back_arrow_image: {
+    width: 32,
+    height: 32,
+  },
+  modal_big_avatar_container: {
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    borderWidth: 4,
+    borderColor: styleVariables.black,
+    overflow: 'hidden',
+  },
+  modal_horizontal_line: {
+    height: 4,
+    backgroundColor: styleVariables.black,
+    width: '100%',
+  },
+  modal_bottom_section: {
+    flex: 0.8,
+    backgroundColor: styleVariables.white, // Slight off-white to match the bottom section of the mockup
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  pfp_options_row: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: '100%',
+    marginBottom: 10,
+  },
+  modal_small_avatar_container: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderWidth: 3,
+    borderColor: styleVariables.black,
+    overflow: 'hidden',
+  },
+  modal_save_button: {
+    backgroundColor: styleVariables.green,
+    borderWidth: 3,
+    borderColor: styleVariables.black,
+    borderRadius: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    width: '90%',
+    alignItems: 'center',
+  },
+  modal_save_text: {
+    color: styleVariables.white,
+    fontFamily: 'Montserrat_600SemiBold',
+    fontSize: 18,
+  }
 });
