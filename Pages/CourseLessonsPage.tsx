@@ -60,6 +60,17 @@ export default function CoursePage({ setPage }: PageProps) {
     <View style={styles.background}>
       <StatusBar style="auto" />
 
+       <Button
+             text="complete lesson"
+             color={styleVariables.green}
+             action={() => setPage('success')}
+           />
+
+            <StatusBar style="auto" />
+           </View>
+     );
+}
+
       {/* Back Arrow */}
       <Pressable onPress={() => setPage('home')} style={styles.back_button}>
         <Text style={styles.back_arrow}>{'<'}</Text>
