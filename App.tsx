@@ -16,6 +16,7 @@ import HomePage from './Pages/HomePage';
 import AccountPage from './Pages/AccountPage';
 import CoursePage from './Pages/CourseLessonsPage';
 import SettingsPage from './Pages/SettingsPage';
+import LessonPage from './Pages/LessonPage';
 
 const pages = {
   start: StartPage,
@@ -25,7 +26,8 @@ const pages = {
   home: HomePage,
   account: AccountPage,
   course: CoursePage,
-  settings: SettingsPage
+  settings: SettingsPage,
+  lesson: LessonPage
 } as const;
 
 type PageName = keyof typeof pages;
@@ -60,6 +62,7 @@ export default function App() {
   // Patched: if user swiped back, discard "future" pages before navigating.
   const setPage: PageProps['setPage'] = (next) => {
     const target = resolveNext(next);
+    console.log(next);
 
     setStack((prevStack): PageName[] => {
       // IMPORTANT: if user swiped back, throw away "future" pages

@@ -13,7 +13,7 @@ export default function InputBox({ placeholder_text, autocomplete_hint, obfuscat
         style={[styles.input_box_container, styles.placeholder_label]}
         placeholder={placeholder_text}
         placeholderTextColor={styleVariables.grey}
-        autoComplete={autocomplete_hint ?? 'username'}
+        autoComplete={autocomplete_hint ?? 'off'}
         autoCapitalize='none'
         secureTextEntry={obfuscated ?? false}
         autoCorrect={false}

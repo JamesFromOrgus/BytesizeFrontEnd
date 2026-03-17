@@ -22,7 +22,7 @@ export default function RegisterPage({ setPage }: PageProps) {
           left: 0,
           right: 0,
           height: 107,
-          zIndex: 10,
+          zIndex: -10,
         }}
         resizeMode="contain"
         />
@@ -37,7 +37,7 @@ export default function RegisterPage({ setPage }: PageProps) {
           // 1. Use a percentage so it's always 80% of the screen width
           width: width * 0.9, 
           aspectRatio: 1, 
-          zIndex: 1, 
+          zIndex: -10, 
         }}
       // 4. 'cover' forces the image to fill the width * 0.8 box entirely
        resizeMode="contain" 
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: styleVariables.white,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: -100
   },
   logo_text: {
     fontSize: 32,

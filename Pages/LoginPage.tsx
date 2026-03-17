@@ -21,7 +21,7 @@ export default function LoginPage( {setPage}: PageProps) {
           left: 0,
           right: 0,
           height: 107,
-          zIndex: 10,
+          zIndex: -10,
         }}
         resizeMode="contain"
         />
@@ -34,7 +34,7 @@ export default function LoginPage( {setPage}: PageProps) {
           bottom: 0,
           width: width * 0.9, 
           aspectRatio: 1, 
-          zIndex: 1, 
+          zIndex: -10, 
         }}
        resizeMode="contain" 
       />
@@ -43,7 +43,7 @@ export default function LoginPage( {setPage}: PageProps) {
         <Text style={[styles.logo_text, {color: styleVariables.orange}]}>return<Text style={[styles.logo_text]}>ing user?</Text></Text>
       </View>
       <View style={{gap: 20, marginTop: 24}}>
-        <InputBox placeholder_text='username/email'/>
+        <InputBox placeholder_text='username/email' autocomplete_hint='username'/>
         <InputBox placeholder_text='password' autocomplete_hint='current-password' obfuscated={true}/>
         <Button text={'login'} color={styleVariables.green} width={300} action={function (): void {
           setPage('onboarding')
@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: styleVariables.white,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: -100
   },
   logo_text: {
     fontSize: 36,

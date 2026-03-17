@@ -93,7 +93,7 @@ export default function CoursePage({ setPage }: PageProps) {
               color={styleVariables.white}
               height={36}
               width={219}
-              action={void null}
+              action={() => setPage("lesson")}
             />
           </View>
         ))}

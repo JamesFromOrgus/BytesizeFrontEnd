@@ -7,11 +7,11 @@ import { PageProps } from '../App';
 // Course examples
 const COURSES = [
   { id: '1', title: 'python development', lessons: 20, color: styleVariables.orange },
-  { id: '2', title: 'computer architectures', lessons: 12, color: styleVariables.orange },
-  { id: '3', title: 'further mathematics', lessons: 4, color: styleVariables.blue },
-  { id: '4', title: 'statistical analysis', lessons: 67, color: styleVariables.blue },
-  { id: '5', title: 'taste the rainbow', lessons: 3, color: styleVariables.blue },
-  { id: '6', title: 'how to smell fish', lessons: 10, color: styleVariables.blue },
+  // { id: '2', title: 'computer architectures', lessons: 12, color: styleVariables.orange },
+  // { id: '3', title: 'further mathematics', lessons: 4, color: styleVariables.blue },
+  // { id: '4', title: 'statistical analysis', lessons: 67, color: styleVariables.blue },
+  // { id: '5', title: 'taste the rainbow', lessons: 3, color: styleVariables.blue },
+  // { id: '6', title: 'how to smell fish', lessons: 10, color: styleVariables.blue },
 ];
 
 export default function HomePage({ setPage }: PageProps) {
@@ -27,7 +27,7 @@ export default function HomePage({ setPage }: PageProps) {
           <Text style={styles.featuredTitle}>single variable calculus for beginners</Text>
 
           <View style={styles.progressBar}>
-            <Animated.View style={[StyleSheet.absoluteFill, {backgroundColor: styleVariables.black, width: "50%"}]}/>
+            <Animated.View style={[StyleSheet.absoluteFill, {backgroundColor: styleVariables.black, width: "0%"}]}/>
           </View>
 
           <View style={styles.centerButton}>

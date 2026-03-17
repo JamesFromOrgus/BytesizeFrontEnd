@@ -22,7 +22,7 @@ export default function StartPage({ setPage }: PageProps) {
             { translateX: -(width * 0.7) * 0.4 },
             { translateY: -(height * 0.7 / 1.5) * 0.7 },
           ],
-          zIndex: 0,
+          zIndex: -10,
         }}
         resizeMode="contain"
       />
@@ -34,7 +34,7 @@ export default function StartPage({ setPage }: PageProps) {
                 top: 718,
                 right: 0,
                 height: 154,
-                zIndex: 10,
+                zIndex: -10,
               }}
               resizeMode="contain"
               />
@@ -50,7 +50,7 @@ export default function StartPage({ setPage }: PageProps) {
           height: 52,
           top: 57,
           left: 33,
-          zIndex: 0,
+          zIndex: -10,
           }}
         resizeMode="contain"
         />
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: styleVariables.white,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: -10
   },
   logo_text: {
     fontSize: 36,
