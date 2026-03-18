@@ -17,7 +17,7 @@ import AccountPage from './Pages/AccountPage';
 import CoursePage from './Pages/CourseLessonsPage';
 import SettingsPage from './Pages/SettingsPage';
 import LessonPage from './Pages/LessonPage';
-import LessonsSuccessPage from './Pages/LessonSuccessPage';
+import LessonSuccessPage from './Pages/LessonSuccessPage';
 
 const pages = {
   start: StartPage,
@@ -28,7 +28,7 @@ const pages = {
   account: AccountPage,
   course: CoursePage,
   settings: SettingsPage,
-  lesson: LessonPage
+  lesson: LessonPage,
   success: LessonSuccessPage
 } as const;
 
