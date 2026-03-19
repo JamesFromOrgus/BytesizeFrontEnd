@@ -14,11 +14,9 @@ export default function LessonSuccessPage({ setPage }: PageProps) {
 
   return (
     <View style={styles.background}>
-      <Text style={styles.mutedLabel}>end of lesson</Text>
 
       <View style={styles.card}>
         <Text style={styles.title}>success!</Text>
-        <Image source={require('../assets/star.png')} style={styles.icon} />
         <Text style={styles.subtitle}>{`+${gainedXP} xp`}</Text>
 
         <View style={styles.progressRow}>
@@ -77,16 +75,17 @@ const styles = StyleSheet.create({
     marginBottom: -4,
   },
   title: {
-    fontSize: 48,
+    fontSize: 36,
     fontFamily: 'Montserrat_600SemiBold',
     color: styleVariables.black,
     textTransform: 'lowercase',
+    margin: 12,
   },
   subtitle: {
     fontSize: 20,
     fontFamily: 'Montserrat_600SemiBold',
     color: styleVariables.black,
-    opacity: 0.7,
+    opacity: 1,
   },
   progressRow: {
     width: '100%',

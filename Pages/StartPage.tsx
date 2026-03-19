@@ -37,7 +37,7 @@ export default function StartPage({ setPage }: PageProps) {
                 zIndex: -10,
               }}
               resizeMode="contain"
-              />
+      />
 
       <View style={{width: 256}}>
         <Text style={styles.logo_text}>welcome   <Text style={[styles.logo_text, {color: styleVariables.orange}]}>   *</Text></Text>

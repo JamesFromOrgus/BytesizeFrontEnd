@@ -133,6 +133,8 @@ export default function SettingsPage({ setPage }: PageProps) {
             {/*Save Button */}
             <Pressable style={styles.green_modal_button} onPress={() => setIsModalVisible(false)}>
               <Text style={styles.modal_button_text}>save changes</Text>
+
+              {/*Figure out what the hell is going on when jump to onboarding or login page (might have something to do with app.tsx scroll being weird) */}
             </Pressable>
           </View>
         </View>

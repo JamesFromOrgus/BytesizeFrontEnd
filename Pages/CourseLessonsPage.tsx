@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Pressable, Image } from 'react-native';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
@@ -82,6 +82,18 @@ export default function CoursePage({ setPage }: PageProps) {
       <Pressable onPress={() => setPage('home')} style={styles.back_button}>
         <Text style={styles.back_arrow}>{'<'}</Text>
       </Pressable>
+
+      {/*Top right element */}
+      <Image source={require('../assets/elipse-black.png')}
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                height: 154,
+                zIndex: 0,
+              }}
+              resizeMode="contain"
+      />
 
       {/* Page Title */}
       <Text style={styles.h1}>python for{'\n'}beginners</Text>
