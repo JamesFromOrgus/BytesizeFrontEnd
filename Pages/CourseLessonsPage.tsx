@@ -19,13 +19,13 @@ const lessons = [
   },
   {
     id: "3",
-    title: "lesson 3\noperators\npart 1",
+    title: "lesson 3\n simple\noperators",
     description: "learn about special symbols in python that perform actions on values and variables.",
     status: "not started",
   },
   {
     id: "4",
-    title: "lesson 3\noperators\npart 2",
+    title: "lesson 3\nadvanced\noperators",
     description: "learn about advanced special symbols in python that perform actions on values and variables.",
     status: "not started",
   },
@@ -37,13 +37,13 @@ const lessons = [
   },
   {
     id: "6",
-    title: "lesson 5\nloops\npart 1",
+    title: "lesson 5\nsimple\nloops",
     description: "in the lesson you will learn how to use loops with python, and demistify for and while keywords.",
     status: "not started"
   },
   {
     id: "7",
-    title: "lesson 5\nloops\npart 2",
+    title: "lesson 5\nadvanced\nloops",
     description: "in the lesson you will learn how to use avdanced loops with python, and demistify for and while keywords.",
     status: "not started"
   },
@@ -61,7 +61,7 @@ const lessons = [
   },
   {
     id: "10",
-    title: "lesson 7\nvariables\part 2",
+    title: "lesson 7\nvariables\npart 2",
     description: "learn how to use variables in python extensively.",
     status: "not started"
   },
