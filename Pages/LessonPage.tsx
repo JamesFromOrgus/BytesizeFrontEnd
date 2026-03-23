@@ -6,25 +6,22 @@ import { PageProps } from '../App';
 import TheoryBlock from '../Molecules/TheoryBlock';
 import Toggle from '../Atoms/Toggle';
 import MultiChoice from '../Molecules/MultiChoice';
+import FillInTheBlanks from '../Molecules/FillInTheBlanks';
+import Flashcards from '../Molecules/Flashcards';
+import MatchTermToDefinition from '../Molecules/Match';
 
 export default function LessonPage({ setPage }: PageProps) {
   return (
     <View style={styles.background}>
       <StatusBar style="auto" />
 
-      {/* Back Arrow */}
-      <Pressable onPress={() => setPage('home')} style={styles.back_button}>
-        <Text style={styles.back_arrow}>{'<'}</Text>
-      </Pressable>
-
-      {/* Horizontal Card Carousel */}
       <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.carousel}
-        style={styles.carousel_container}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={styles.carousel}
+      style={styles.carousel_container}
       >
-      {
+        {
         <TheoryBlock
         title='what are variables?'
         theory_text="imagine a box. this box can contain any piece
@@ -33,7 +30,22 @@ of information about an object – number, word, list of groceries etc.
 variables in python handle exactly the same thing!" 
 callback={() => null}/>
       }
-      <MultiChoice title='which of these can be stored in variables?' />
+
+      <MultiChoice title='which of these can be stored in variables?' callback={void null} />
+
+      <FillInTheBlanks title='complete string assignment' prefix='box=' answer='"shoe"' callback={void null} />
+      <Flashcards title='review' cards={['vill you vear vigs?', 'oui', 'test']} callback={void null} />
+      <MatchTermToDefinition 
+        title="match terms to their definitions"
+        pairs={[
+          { term: "variable", definition: "a container for storing data" },
+          { term: "string", definition: "text data in quotes" },
+          { term: "integer", definition: "whole number" },
+        ]}
+        callback={(correct) => {
+          console.log("Was correct:", correct);
+        }}
+      />
       </ScrollView>
 
     </View>
@@ -44,7 +56,7 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: styleVariables.white,
-    paddingTop: 80,
+    paddingTop: 80
   },
   back_button: {
     position: 'absolute',

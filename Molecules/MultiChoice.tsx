@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: styleVariables.black,
     marginRight: 16,
+    marginBottom: 48
   },
   theory_title: {
     fontSize: 20,
