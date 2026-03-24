@@ -139,6 +139,19 @@ export default function SettingsPage({ setPage }: PageProps) {
           </View>
         </View>
       </Modal>
+
+      
+      {/*Log out button */}
+      <View style={styles.log_out_button}>
+        <Button 
+          text="log out" 
+          color={styleVariables.orange} 
+          width={250} 
+          height={45} 
+          action={() => setPage('start')} 
+        />
+      </View>
+
       <StatusBar style="auto" />
     </View>
   );
@@ -330,5 +343,11 @@ const styles = StyleSheet.create({
     color: styleVariables.white,
     fontFamily: 'Montserrat_600SemiBold',
     fontSize: 14,
-  }
+  },
+  log_out_button: {
+    fontFamily: 'Montserrat_600SemiBold',
+    borderColor: styleVariables.black,
+    marginTop: 30,
+    alignItems: 'center',
+  },
 });
