@@ -78,21 +78,25 @@ export default function CoursePage({ setPage }: PageProps) {
     <View style={styles.background}>
       <StatusBar style="auto" />
 
-      {/* Back Arrow */}
+      {/*Back button */}
       <Pressable onPress={() => setPage('home')} style={styles.back_button}>
-        <Text style={styles.back_arrow}>{'<'}</Text>
+        <Image 
+        source={require('../assets/back-arrow.png')} 
+        style={styles.back_arrow_image} 
+        resizeMode="contain" 
+        />
       </Pressable>
 
       {/*Top right element */}
-      <Image source={require('../assets/elipse-black.png')}
-              style={{
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                height: 154,
-                zIndex: 0,
-              }}
-              resizeMode="contain"
+      <Image source={require('../assets/elipse-black.png')} pointerEvents="none"
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          height: 154,
+          zIndex: 0,
+          }}
+        resizeMode="contain"
       />
 
       {/* Page Title */}
@@ -101,6 +105,7 @@ export default function CoursePage({ setPage }: PageProps) {
       {/* Horizontal Card Carousel */}
       <ScrollView
         horizontal
+        nestedScrollEnabled={true}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.carousel}
         style={styles.carousel_container}
@@ -139,10 +144,10 @@ const styles = StyleSheet.create({
     backgroundColor: styleVariables.white,
     paddingTop: 80,
   },
-  back_button: {
-    position: 'absolute',
-    top: 70,
-    left: 24,
+    back_button: {
+    marginBottom: 20,
+    left: 20,
+    alignSelf: 'flex-start',
   },
   back_arrow: {
     fontSize: 32,
@@ -158,7 +163,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   carousel_container: {
-    flexGrow: 0,
+    //flexGrow: 0,
+    flex: 1,
   },
   carousel: {
     paddingLeft: 24,
