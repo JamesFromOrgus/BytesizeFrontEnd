@@ -1,33 +1,107 @@
-import { StyleSheet, Text, View, Pressable, TextInput, TextInputProps } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import styleVariables from '../StyleVariables';
 import Button from '../Atoms/Button';
-import MultiChoiceOption from './MultiChoiceOption';
+import { useState } from 'react';
+
+// Each option carries the display text and whether it is the correct answer
+export type OptionItem = {
+  text: string;
+  correct: boolean;
+};
 
 type MultiChoiceData = {
-    title: string,
-    //theory_text: string,  do an array
-    callback: () => void,
-}
+  title: string;
+  options: OptionItem[];
+  callback: (correct: boolean) => void;
+};
 
-export default function MultiChoice({ title, callback }: MultiChoiceData) {
-    return (
-        <View style={styles.question_card}>
-            <Text style={styles.theory_title}>{title}</Text>
-            <View style={styles.statLine} />
-            <MultiChoiceOption text='integer' />
-            <MultiChoiceOption text='string' />
-            <MultiChoiceOption text='shoe' />
-            <View style={{height: 12}} />
-            <Button
-              text="submit"
-              label_color={styleVariables.white}
-              color={styleVariables.green}
-              height={36}
-              width={219}
-              action={callback}
-            />
-        </View>
-    );
+export default function MultiChoice({ title, options, callback }: MultiChoiceData) {
+  // Index of the currently highlighted option (null = nothing picked yet)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  // Locked once the user presses "submit"
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleOptionPress = (index: number) => {
+    if (submitted) return;
+    setSelectedIndex(index);
+  };
+
+  const handleSubmit = () => {
+    if (selectedIndex === null || submitted) return;
+    setSubmitted(true);
+    callback(options[selectedIndex].correct);
+  };
+
+  const handleRetry = () => {
+    setSelectedIndex(null);
+    setSubmitted(false);
+  };
+
+  const isCorrectAnswer = selectedIndex !== null && options[selectedIndex].correct;
+
+  // Card border turns green/red after submission
+  const cardBorderColor = submitted
+    ? isCorrectAnswer ? styleVariables.green : styleVariables.error
+    : styleVariables.black;
+
+  return (
+    <View style={[styles.question_card, { borderColor: cardBorderColor }]}>
+      <Text style={styles.theory_title}>{title}</Text>
+      <View style={styles.statLine} />
+
+      {options.map((option, index) => {
+        // Compute per-pill colour
+        let pillBg = styleVariables.white;
+        let pillBorder = styleVariables.black;
+        let textColor = styleVariables.black;
+
+        if (submitted) {
+          if (option.correct) {
+            pillBg = styleVariables.green;
+            textColor = styleVariables.white;
+          } else if (index === selectedIndex) {
+            pillBg = styleVariables.error;
+            textColor = styleVariables.white;
+          }
+        } else if (index === selectedIndex) {
+          pillBg = styleVariables.active_blue;
+          pillBorder = styleVariables.blue;
+        }
+
+        return (
+          <Pressable
+            key={index}
+            onPress={() => handleOptionPress(index)}
+            style={[styles.option_pill, { backgroundColor: pillBg, borderColor: pillBorder }]}
+          >
+            <Text style={[styles.option_text, { color: textColor }]}>{option.text}</Text>
+          </Pressable>
+        );
+      })}
+
+      <View style={{ height: 12 }} />
+
+      {submitted && !isCorrectAnswer ? (
+        <Button
+          text="retry"
+          label_color={styleVariables.white}
+          color={styleVariables.orange}
+          height={36}
+          width={219}
+          action={handleRetry}
+        />
+      ) : (
+        <Button
+          text="submit"
+          label_color={styleVariables.white}
+          color={selectedIndex !== null && !submitted ? styleVariables.green : styleVariables.grey}
+          height={36}
+          width={219}
+          action={handleSubmit}
+        />
+      )}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -39,9 +113,7 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
     paddingHorizontal: 16,
     borderWidth: 2,
-    borderColor: styleVariables.black,
-    marginRight: 16,
-    marginBottom: 48
+    marginBottom: 48,
   },
   theory_title: {
     fontSize: 20,
@@ -54,12 +126,17 @@ const styles = StyleSheet.create({
     backgroundColor: styleVariables.black,
     marginVertical: 6,
     borderRadius: 2,
+    marginBottom: 14,
   },
-  theory_text: {
-    fontSize: 12,
-    color: styleVariables.black,
+  option_pill: {
+    borderWidth: 2,
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    marginBottom: 10,
+  },
+  option_text: {
     fontFamily: 'Montserrat_600SemiBold',
-    lineHeight: 18,
-    marginBottom: 20,
+    fontSize: 13,
   },
 });

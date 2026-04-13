@@ -4,7 +4,9 @@ import { useState } from 'react';
 
 type FlashcardsData = {
   title: string;
-  cards: string[];   // question/term strings shown on each card
+  // Each string is the text shown on one flashcard face
+  cards: string[];
+  // Called once the user navigates past the final card
   callback: () => void;
 };
 
@@ -12,8 +14,10 @@ export default function Flashcards({ title, cards, callback }: FlashcardsData) {
   const [index, setIndex] = useState(0);
 
   const goBack = () => setIndex(i => Math.max(0, i - 1));
+
   const goNext = () => {
     if (index === cards.length - 1) {
+      // User has finished reviewing all cards — notify parent
       callback();
     } else {
       setIndex(i => i + 1);
@@ -25,25 +29,37 @@ export default function Flashcards({ title, cards, callback }: FlashcardsData) {
       <Text style={styles.title}>{title}</Text>
       <View style={styles.statLine} />
 
-      {/* Flashcard display */}
+      {/* Main flashcard face */}
       <View style={styles.flashCard}>
         <Text style={styles.flashText}>{cards[index]}</Text>
       </View>
 
       {/* Navigation row */}
       <View style={styles.navRow}>
+        {/* Back arrow — greyed out on the first card */}
         <Pressable onPress={goBack} style={styles.arrowBtn}>
-          <Text style={[styles.arrow, { color: index === 0 ? styleVariables.grey : styleVariables.green }]}>
+          <Text
+            style={[
+              styles.arrow,
+              { color: index === 0 ? styleVariables.grey : styleVariables.green },
+            ]}
+          >
             ←
           </Text>
         </Pressable>
 
+        {/* Card counter pill */}
         <View style={styles.counterPill}>
-          <Text style={styles.counterText}>{index + 1}/{cards.length}</Text>
+          <Text style={styles.counterText}>
+            {index + 1}/{cards.length}
+          </Text>
         </View>
 
+        {/* Forward arrow — shows a tick on the last card to signal completion */}
         <Pressable onPress={goNext} style={styles.arrowBtn}>
-          <Text style={[styles.arrow, { color: styleVariables.green }]}>→</Text>
+          <Text style={[styles.arrow, { color: styleVariables.green }]}>
+            {index === cards.length - 1 ? '✓' : '→'}
+          </Text>
         </Pressable>
       </View>
     </View>
@@ -60,7 +76,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderWidth: 2,
     borderColor: styleVariables.black,
-    marginRight: 16,
+    marginBottom: 48,
   },
   title: {
     fontSize: 20,

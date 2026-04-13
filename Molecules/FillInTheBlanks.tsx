@@ -5,9 +5,9 @@ import { useState } from 'react';
 
 type FillInTheBlanksData = {
   title: string;
-  // The prompt shown inside the input, with a blank to fill.
-  // Pass segments: plain text + the expected answer.
+  // Text shown to the left of the input field, e.g. 'print'
   prefix: string;
+  // The exact string the user must type to be marked correct, e.g. '("Hello World!")'
   answer: string;
   callback: (correct: boolean) => void;
 };
@@ -18,9 +18,11 @@ export default function FillInTheBlanks({ title, prefix, answer, callback }: Fil
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
   const handleSubmit = () => {
+    // Trim both sides to avoid whitespace false-negatives
     const correct = value.trim() === answer.trim();
     setIsCorrect(correct);
     setSubmitted(true);
+    // Only fire the callback once, on the first submission
     callback(correct);
   };
 
@@ -30,6 +32,7 @@ export default function FillInTheBlanks({ title, prefix, answer, callback }: Fil
     setIsCorrect(null);
   };
 
+  // Card border reflects result after submission
   const borderColor = submitted
     ? isCorrect ? styleVariables.green : styleVariables.error
     : styleVariables.black;
@@ -39,28 +42,43 @@ export default function FillInTheBlanks({ title, prefix, answer, callback }: Fil
       <Text style={styles.title}>{title}</Text>
       <View style={styles.statLine} />
 
-      {/* Code-style input row */}
+      {/* Code-style input row: prefix text + typed answer side by side */}
       <View style={styles.inputRow}>
         <Text style={styles.codePrefix}>{prefix}</Text>
         <TextInput
-          style={[styles.codeInput, { color: submitted && isCorrect ? styleVariables.green : styleVariables.orange }]}
+          style={[
+            styles.codeInput,
+            {
+              // Green when correct, orange while typing / after wrong attempt
+              color: submitted && isCorrect ? styleVariables.green : styleVariables.orange,
+            },
+          ]}
           value={value}
           onChangeText={setValue}
           autoCapitalize="none"
           autoCorrect={false}
+          // Keep editable after a wrong attempt so the user can fix their answer
           editable={!submitted || !isCorrect}
           placeholder="..."
           placeholderTextColor={styleVariables.grey}
         />
       </View>
 
+      {/* Inline feedback message */}
       {submitted && (
-        <Text style={[styles.feedback, { color: isCorrect ? styleVariables.green : styleVariables.error }]}>
+        <Text
+          style={[
+            styles.feedback,
+            { color: isCorrect ? styleVariables.green : styleVariables.error },
+          ]}
+        >
           {isCorrect ? 'correct!' : `expected: ${answer}`}
         </Text>
       )}
 
       <View style={{ height: 16 }} />
+
+      {/* Button switches to "retry" after a wrong answer */}
       <Button
         text={submitted && !isCorrect ? 'retry' : 'submit'}
         label_color={styleVariables.white}
@@ -82,8 +100,7 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
     paddingHorizontal: 16,
     borderWidth: 2,
-    borderColor: styleVariables.black,
-    marginRight: 16,
+    marginBottom: 48,
   },
   title: {
     fontSize: 20,
@@ -116,10 +133,12 @@ const styles = StyleSheet.create({
   codeInput: {
     fontFamily: 'Montserrat_600SemiBold',
     fontSize: 14,
-    color: styleVariables.orange,
     flex: 1,
+    // Remove default padding on Android so the text aligns with the prefix
     padding: 0,
-  },
+    // Remove any blue focus outline on web
+    outlineWidth: 0,
+  } as any,
   feedback: {
     fontFamily: 'Montserrat_600SemiBold',
     fontSize: 12,
