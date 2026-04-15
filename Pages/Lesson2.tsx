@@ -12,19 +12,42 @@ const LESSON_STEPS = [
     type: 'theory',
     title: 'what is a variable?',
     theory_text:
-      'a variable is a named container that holds a value. in python you create one simply by assigning it: name = "Alice".',
+        'a variable is a named container that holds a value. in python you create one simply by assigning it: name = "Alice".',
   },
   {
     type: 'theory',
     title: 'variable naming rules',
     theory_text:
-      'variable names must start with a letter or underscore, can contain letters, digits and underscores, are case-sensitive, and cannot be python keywords.',
+        'variable names must start with a letter or underscore, can contain letters, digits and underscores, are case-sensitive, and cannot be python keywords.',
   },
   {
     type: 'theory',
     title: 'data types',
     theory_text:
-      'python infers the type automatically:\n• str is text in quotes\n• int are whole numbers\n• float are decimal numbers\n• bool are True or False',
+        'python infers the type automatically:\n• str is text in quotes\n• int are whole numbers\n• float are decimal numbers\n• bool are True or False',
+  },
+  {
+    type: 'theory',
+    title: 'Assignment rules',
+    theory_text:
+        'in python you can create a variable by assigning it:\n A = 1\n or you can assign multiple at once\n A,B,C = 1,2,3',
+  },
+  {
+    type: 'theory',
+    title: 'cases',
+    theory_text:
+        'Programmers have different case standards but they often fall into 3 categories:\n camelCase \n PascalCase \n snake_case',
+
+  },
+  {
+    type: 'multichoice',
+    title:'Which variable types are correct',
+    options:[
+      {text:'Int',correct:true},
+      {text:'Num',correct:false},
+      {text:'Boolean',correct:true},
+      {text:'Strin',correct:false},
+    ],
   },
   {
     type: 'multichoice',
@@ -41,6 +64,16 @@ const LESSON_STEPS = [
     title: 'assign the string "hello" to a variable called greeting',
     prefix: 'greeting = ',
     answer: '"hello"',
+  },
+  {
+    type: 'multichoice',
+    title:'Which variable type deals with true or false values',
+    options:[
+      {text:'String',correct:false},
+      {text:'Integer',correct:false},
+      {text:'Boolean',correct:true},
+      {text:'Float',correct:false},
+    ],
   },
 ];
 
