@@ -6,6 +6,8 @@ import {
   View,
   Animated,
   useWindowDimensions,
+  KeyboardAvoidingView, 
+  Platform,             
 } from 'react-native';
 import { useRef, useState } from 'react';
 import Button from '../Atoms/Button';
@@ -136,7 +138,7 @@ export default function Lesson1({ setPage }: PageProps) {
     Animated.timing(progressAnim, {
       toValue: next / LESSON_STEPS.length,
       duration: 400,
-      useNativeDriver: false, // width animations require JS driver
+      useNativeDriver: false, 
     }).start();
 
     // Small delay lets the new element render before we scroll to it
@@ -147,7 +149,7 @@ export default function Lesson1({ setPage }: PageProps) {
 
   // Render a single step by its data shape
   const renderStep = (step: typeof LESSON_STEPS[number], index: number) => {
-    if (index >= visibleCount) return null; // hidden until revealed
+    if (index >= visibleCount) return null; 
 
     switch (step.type) {
       case 'theory':
@@ -225,13 +227,20 @@ export default function Lesson1({ setPage }: PageProps) {
       </View>
 
       {/* ── Scrollable lesson content ── */}
-      <ScrollView
-        ref={scrollRef}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
+      <KeyboardAvoidingView 
+        style={{ flex: 1 }} 
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        {LESSON_STEPS.map((step, i) => renderStep(step, i))}
-      </ScrollView>
+        <ScrollView
+          ref={scrollRef}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+          automaticallyAdjustKeyboardInsets={true} 
+          keyboardShouldPersistTaps="handled"      
+        >
+          {LESSON_STEPS.map((step, i) => renderStep(step, i))}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 }

@@ -106,7 +106,8 @@ export default function MultiChoice({ title, options, callback }: MultiChoiceDat
 
 const styles = StyleSheet.create({
   question_card: {
-    width: 350,
+    width: '100%',
+    maxWidth: 500,
     backgroundColor: styleVariables.white,
     borderRadius: 15,
     paddingTop: 24,

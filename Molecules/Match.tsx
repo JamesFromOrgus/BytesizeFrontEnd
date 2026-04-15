@@ -19,7 +19,7 @@ export default function MatchTermToDefinition({ title, pairs, callback }: MatchT
   const [matched, setMatched] = useState<Record<string, string | null>>(
     () => Object.fromEntries(pairs.map(p => [p.term, null]))
   );
-  const [selected, setSelected] = useState<string | null>(null); // selected definition from pool
+  const [selected, setSelected] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
@@ -153,7 +153,8 @@ export default function MatchTermToDefinition({ title, pairs, callback }: MatchT
 
 const styles = StyleSheet.create({
   card: {
-    width: 350,
+    width: '100%',
+    maxWidth: 500,
     backgroundColor: styleVariables.white,
     borderRadius: 15,
     paddingTop: 24,
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderWidth: 2,
     borderColor: styleVariables.black,
-    marginRight: 16,
+    marginBottom: 48,
   },
   title: {
     fontSize: 20,

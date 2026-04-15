@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, View, Animated } from 'react-native';
+import { ScrollView, StyleSheet, View, Animated, KeyboardAvoidingView, Platform } from 'react-native';
 import { useRef, useState } from 'react';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
@@ -75,9 +75,20 @@ export default function Lesson2({ setPage }: PageProps) {
           <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: styleVariables.green, width: progressAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] }) }]} />
         </View>
       </View>
-      <ScrollView ref={scrollRef} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {LESSON_STEPS.map((step, i) => renderStep(step, i))}
-      </ScrollView>
+      <KeyboardAvoidingView 
+        style={{ flex: 1 }} 
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <ScrollView 
+          ref={scrollRef} 
+          contentContainerStyle={styles.scrollContent} 
+          showsVerticalScrollIndicator={false}
+          automaticallyAdjustKeyboardInsets={true} 
+          keyboardShouldPersistTaps="handled"
+        >
+          {LESSON_STEPS.map((step, i) => renderStep(step, i))}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 }

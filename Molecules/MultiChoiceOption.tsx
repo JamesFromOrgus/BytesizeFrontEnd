@@ -19,20 +19,21 @@ export default function MultiChoiceOption({ text }: OptionData) {
 }
 
 const styles = StyleSheet.create({
-    question_card: {
+  question_card: {
     backgroundColor: styleVariables.white,
     paddingTop: 8,
     paddingBottom: 8,
     paddingHorizontal: 16,
     borderColor: styleVariables.black,
-    marginRight: 16,
     flexDirection: 'row',
-    gap: 6
+    gap: 6,
+    width: '100%',
+    maxWidth: 500
   },
   button_container: {
     borderWidth: 2,
     borderColor: styleVariables.black,
-    width: 250,
+    width: '100%',
     height: 42,
     borderRadius: 16,
     overflow: 'hidden',

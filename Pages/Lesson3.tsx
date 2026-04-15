@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, View, Text, Animated } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, Animated, KeyboardAvoidingView, Platform } from 'react-native';
 import { useRef, useState } from 'react';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
@@ -30,11 +30,22 @@ export default function LessonN({ setPage }: PageProps) {
           <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: styleVariables.green, width: progressAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] }) }]} />
         </View>
       </View>
-      <ScrollView ref={scrollRef} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {LESSON_STEPS.slice(0, visibleCount).map((step, i) => (
-          <TheoryBlock key={i} title={step.title} theory_text={step.theory_text} callback={advance} />
-        ))}
-      </ScrollView>
+      <KeyboardAvoidingView 
+        style={{ flex: 1 }} 
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <ScrollView 
+          ref={scrollRef} 
+          contentContainerStyle={styles.scrollContent} 
+          showsVerticalScrollIndicator={false}
+          automaticallyAdjustKeyboardInsets={true} 
+          keyboardShouldPersistTaps="handled"
+        >
+          {LESSON_STEPS.slice(0, visibleCount).map((step, i) => (
+            <TheoryBlock key={i} title={step.title} theory_text={step.theory_text} callback={advance} />
+          ))}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 }

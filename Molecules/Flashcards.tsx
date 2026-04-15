@@ -68,7 +68,8 @@ export default function Flashcards({ title, cards, callback }: FlashcardsData) {
 
 const styles = StyleSheet.create({
   card: {
-    width: 350,
+    width: '100%',
+    maxWidth: 500,
     backgroundColor: styleVariables.white,
     borderRadius: 15,
     paddingTop: 24,

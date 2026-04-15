@@ -48,10 +48,7 @@ export default function FillInTheBlanks({ title, prefix, answer, callback }: Fil
         <TextInput
           style={[
             styles.codeInput,
-            {
-              // Green when correct, orange while typing / after wrong attempt
-              color: submitted && isCorrect ? styleVariables.green : styleVariables.orange,
-            },
+            { color: submitted && isCorrect ? styleVariables.green : styleVariables.orange },
           ]}
           value={value}
           onChangeText={setValue}
@@ -93,7 +90,8 @@ export default function FillInTheBlanks({ title, prefix, answer, callback }: Fil
 
 const styles = StyleSheet.create({
   card: {
-    width: 350,
+    width: '100%',
+    maxWidth: 500, // keeps it looking good on the foldible
     backgroundColor: styleVariables.white,
     borderRadius: 15,
     paddingTop: 24,
