@@ -127,8 +127,38 @@ export default function Lesson2({ setPage }: PageProps) {
 }
 
 const styles = StyleSheet.create({
-  background: { flex: 1, backgroundColor: styleVariables.white, paddingTop: 56 },
-  progressBarWrap: { paddingHorizontal: 20, marginBottom: 12 },
-  progressBarBackground: { height: 20, backgroundColor: styleVariables.white, borderColor: styleVariables.black, borderWidth: 2, borderRadius: 10, overflow: 'hidden' },
-  scrollContent: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 100, alignItems: 'center' },
+  background: {
+    flex: 1,
+    backgroundColor: styleVariables.white,
+    paddingTop: 56,
+  },
+  progressBarWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    marginBottom: 12,
+    gap: 12,
+  },
+  progressBarBackground: {
+    flex: 1,
+    height: 20,
+    backgroundColor: styleVariables.white,
+    borderColor: styleVariables.black,
+    borderWidth: 2,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  progressLabel: {
+    fontFamily: 'Montserrat_600SemiBold',
+    fontSize: 12,
+    color: styleVariables.black,
+    width: 40,
+    textAlign: 'right',
+  },
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    paddingBottom: 100,
+    alignItems: 'center',
+  },
 });

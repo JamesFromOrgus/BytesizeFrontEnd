@@ -4,14 +4,15 @@ import { useRef, useState } from 'react';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 import TheoryBlock from '../Molecules/TheoryBlock';
+import MultiChoice from '../Molecules/MultiChoice';
+import MatchTermToDefinition from '../Molecules/Match';
 
 const LESSON_STEPS = [
   {
       type: 'theory',
       title: 'What are Operators',
-      theory_text: 'Operators are special symbols in Python that perform actions on values and variables.\n You' +
+      theory_text: 'Operators are special symbols in Python that perform actions on values and variables.\n You ' +
           'can think of them as tools that allow Python to calculate, compare or modify data.',
-
   },
     {
         type: 'theory',
@@ -53,11 +54,7 @@ const LESSON_STEPS = [
         pairs: [
             {term:'+',definition:"Arithmetic"},
             {term:'>',definition:"Comparison"},
-            {term:'/',definition:"Arithmetic"},
-            {term:'+=',definition:"Assignment"},
-            {term:'//',definition:"Arithmetic"},
-            {term:'==',definition:"Comparison"},
-            {term:'>=',definition:"Comparison"},
+            {term:'/',definition:"Mathematical"}
         ]
     },
     {
@@ -84,12 +81,8 @@ const LESSON_STEPS = [
         type: 'match',
         title: 'Match the comparative operators',
         pairs: [
-            {term:'12 > 14',definition:"false"},
-            {term:'4 <= 4',definition:"true"},
-            {term:'5 != 5',definition:"true"},
-            {term:'12 != 14',definition:"false"},
-            {term:'5 < 17',definition:"true"},
-            {term:'99 == 100',definition:"false"},
+            {term:'12 > 14', definition:"false"},
+            {term:'4 <= 4', definition:"true"}
         ]
     },
 
@@ -100,36 +93,112 @@ export default function Lesson3({ setPage }: PageProps) {
   const progressAnim = useRef(new Animated.Value(1 / LESSON_STEPS.length)).current;
   const scrollRef = useRef<ScrollView>(null);
 
+  // Called by every child component when the user presses its action button.
+  // Advances visibleCount and animates the progress bar.
   const advance = () => {
     const next = visibleCount + 1;
-    if (next > LESSON_STEPS.length) { setPage('success'); return; }
+
+    if (next > LESSON_STEPS.length) {
+      // All steps completed — go to the success page
+      setPage('success');
+      return;
+    }
+
     setVisibleCount(next);
-    Animated.timing(progressAnim, { toValue: next / LESSON_STEPS.length, duration: 400, useNativeDriver: false }).start();
-    setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 120);
+
+    Animated.timing(progressAnim, {
+      toValue: next / LESSON_STEPS.length,
+      duration: 400,
+      useNativeDriver: false, 
+    }).start();
+
+    // Small delay lets the new element render before we scroll to it
+    setTimeout(() => {
+      scrollRef.current?.scrollToEnd({ animated: true });
+    }, 120);
+  };
+
+  // Render a single step by its data shape
+  const renderStep = (step: typeof LESSON_STEPS[number], index: number) => {
+    if (index >= visibleCount) return null; 
+
+    switch (step.type) {
+      case 'theory':
+        return (
+          <TheoryBlock
+            key={index}
+            title={step.title!}
+            theory_text={step.theory_text!}
+            callback={advance}
+          />
+        );
+
+      case 'multichoice':
+        return (
+          <MultiChoice
+            key={index}
+            title={step.title!}
+            options={step.options!}
+            // Only advance on a correct answer; wrong answers are retried in-place
+            callback={(correct) => { if (correct) advance(); }}
+          />
+        );
+
+      case 'match':
+        return (
+          <MatchTermToDefinition
+            key={index}
+            title={step.title!}
+            pairs={step.pairs!}
+            callback={(correct) => { if (correct) advance(); }}
+          />
+        );
+
+      default:
+        return null;
+    }
   };
 
   return (
     <View style={styles.background}>
       <StatusBar style="auto" />
+
+      {/* ── Progress bar ── */}
       <View style={styles.progressBarWrap}>
         <View style={styles.progressBarBackground}>
-          <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: styleVariables.green, width: progressAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] }) }]} />
+          <Animated.View
+            style={[
+              StyleSheet.absoluteFill,
+              {
+                backgroundColor: styleVariables.green,
+                // Interpolate the 0-1 animated value to a percentage string
+                width: progressAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: ['0%', '100%'],
+                }),
+              },
+            ]}
+          />
         </View>
+        {/* Step counter label */}
+        <Text style={styles.progressLabel}>
+          {Math.min(visibleCount, LESSON_STEPS.length)}/{LESSON_STEPS.length}
+        </Text>
       </View>
+
+      {/* ── Scrollable lesson content ── */}
       <KeyboardAvoidingView 
         style={{ flex: 1 }} 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <ScrollView 
-          ref={scrollRef} 
-          contentContainerStyle={styles.scrollContent} 
+        <ScrollView
+          ref={scrollRef}
+          contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
           automaticallyAdjustKeyboardInsets={true} 
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps="handled"      
         >
-          {LESSON_STEPS.slice(0, visibleCount).map((step, i) => (
-            <TheoryBlock key={i} title={step.title} theory_text={step.theory_text} callback={advance} />
-          ))}
+          {LESSON_STEPS.map((step, i) => renderStep(step, i))}
         </ScrollView>
       </KeyboardAvoidingView>
     </View>
@@ -137,8 +206,38 @@ export default function Lesson3({ setPage }: PageProps) {
 }
 
 const styles = StyleSheet.create({
-  background: { flex: 1, backgroundColor: styleVariables.white, paddingTop: 56 },
-  progressBarWrap: { paddingHorizontal: 20, marginBottom: 12 },
-  progressBarBackground: { height: 20, backgroundColor: styleVariables.white, borderColor: styleVariables.black, borderWidth: 2, borderRadius: 10, overflow: 'hidden' },
-  scrollContent: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 100, alignItems: 'center' },
+  background: {
+    flex: 1,
+    backgroundColor: styleVariables.white,
+    paddingTop: 56,
+  },
+  progressBarWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    marginBottom: 12,
+    gap: 12,
+  },
+  progressBarBackground: {
+    flex: 1,
+    height: 20,
+    backgroundColor: styleVariables.white,
+    borderColor: styleVariables.black,
+    borderWidth: 2,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  progressLabel: {
+    fontFamily: 'Montserrat_600SemiBold',
+    fontSize: 12,
+    color: styleVariables.black,
+    width: 40,
+    textAlign: 'right',
+  },
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    paddingBottom: 100,
+    alignItems: 'center',
+  },
 });
