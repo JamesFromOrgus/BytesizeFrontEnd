@@ -10,21 +10,93 @@ import {
   Platform,             
 } from 'react-native';
 import { useRef, useState } from 'react';
+import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 import TheoryBlock from '../Molecules/TheoryBlock';
 import MultiChoice from '../Molecules/MultiChoice';
-import Match from '../Molecules/Match'; 
+import FillInTheBlanks from '../Molecules/FillInTheBlanks';
+import MatchTermToDefinition from '../Molecules/Match';
+
+// ─── lesson content ────────────────────────────────────────────────────────────
+// Each item in this array is one "step" in the lesson.
+// The `type` field tells the renderer which component to show.
+// Adding new steps is as simple as pushing another object here.
 
 const LESSON_STEPS = [
+  {
+    type: 'theory',
+    title: 'what is input?',
+    theory_text: 'in python the input() function allows the user to type something into the program.\n\nname = input("Enter your name: ")\n\nimportant to note that every value made through input() is a string, even if you type number.'
+  },
 
-  { type: 'theory', title: 'coming soon', theory_text: 'this lesson is still being written. check back later!' },
+  {
+    type: 'theory',
+    title: 'example',
+    theory_text: 'age = input("Enter your age: ")\nprint(type(age))\n\nthis is type casting.'
+  },
 
+  {
+    type: 'theory',
+    title: 'what is type casting?',
+    theory_text: 'type castimg means converting one data type into another. python provides built-in functions for casting:\nint()\nfloat()\nstr()\nbool()'
+  },
+
+  {
+    type: 'theory',
+    title: 'converting input into integers',
+    theory_text: 'use int() to convert string into an integer.\n\nage = int(input("Enter your age: "))\nprint(age+1) # now this works\n\nwithout casting, "5" + 1 would break the program'
+  },
+
+  {
+    type: 'theory',
+    title: 'conversion',
+    theory_text: 'this kind of conversion applies to every single data type in python. though only bool works sligtly differently – an empty value would be False, while any kind of input would be translated into True.'
+  },
+
+  {
+    type: 'theory',
+    title: 'handling multiple inputs',
+    theory_text: 'option a: one-by-one\n\nx = int(input("Enter x: "))\ny = int(input("Enter y: "))\n\noption b: split input into pieces'
+  },
+
+  {
+    type: 'theory',
+    title: 'common input error',
+    theory_text: 'users may enter something invalid sometimes into a field. which will cause ValueError, later these can be handled with try/except.'
+  },
+
+  {
+    type: 'multichoice',
+    title: 'which data type does input() collect by default?',
+    options: [
+      { text: 'boolean', correct: false },
+      { text: 'integer', correct: false },
+      { text: 'string', correct: true }
+    ]
+  },
+
+  {
+    type: 'multichoice',
+    title: 'what is the issue with the following code? donation = int(input" enter your donation aount"))',
+    options: [
+      { text: 'missing bracket after input', correct: true },
+      { text: 'missing coma', correct: false }
+    ]
+  },
+
+  {
+    type: 'multichoice',
+    title: 'in booleans an empty string is false',
+    options: [
+      { text: 'true', correct: true },
+      { text: 'false', correct: false }
+    ]
+  }
 ];
-
 // ─── component ─────────────────────────────────────────────────────────────────
 
-export default function Lesson8({ setPage }: PageProps) {
+export default function Lesson1({ setPage }: PageProps) {
   const { width } = useWindowDimensions();
 
   // How many steps are currently visible (starts at 1 — only the first block shown)
@@ -83,16 +155,6 @@ export default function Lesson8({ setPage }: PageProps) {
             title={step.title!}
             options={step.options!}
             // Only advance on a correct answer; wrong answers are retried in-place
-            callback={(correct) => { if (correct) advance(); }}
-          />
-        );
-
-      case 'match':
-        return (
-          <Match
-            key={index}
-            title={step.title!}
-            pairs={step.pairs!}
             callback={(correct) => { if (correct) advance(); }}
           />
         );
