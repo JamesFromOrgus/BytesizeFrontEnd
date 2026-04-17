@@ -18,7 +18,26 @@ import Match from '../Molecules/Match';
 
 const LESSON_STEPS = [
 
-  { type: 'theory', title: 'coming soon', theory_text: 'this lesson is still being written. check back later!' },
+  { type: 'theory', title: 'Variable number of arguments', theory_text: '*args — allows many unnamed values in a function.\nExample:\ndef total(*numbers): return sum(numbers)\nprint(total(1, 2, 3, 4))\n\n**kwargs — allows many named values.\nExample:\ndef show_info(**info): print(info)\nshow_info(name="Alan", age=22)' },
+
+  { type: 'theory', title: 'Local vs Global Variables', theory_text: 'Local Variable:\nExists only inside a function.\nExample:\ndef func():\n  x = 10  # local\n\nGlobal Variable:\nExists throughout the program.\nExample:\nx = 5  # global\ndef func():\n  print(x)' },
+
+  { type: 'theory', title: 'Why Functions?', theory_text: 'Avoid repeating code.\nMake programs easier to read.\nOrganise logic into reusable pieces.\nEasier debugging and maintenance.' },
+
+  { type: 'multichoice', title: 'Fill in the blank', options: [
+    { text: 'local variable', correct: false },
+    { text: 'global variable', correct: true },
+    { text: 'temporary variable', correct: false },
+  ] },
+
+  { type: 'theory', title: 'Write a function', theory_text: 'Write a function:\ndef display_user(**info):\nPrint all key-value pairs inside it.' },
+
+  { type: 'multichoice', title: 'Nested functions', options: [
+    { text: 'True', correct: true },
+    { text: 'False', correct: false },
+  ] },
+
+  { type: 'theory', title: 'Calculator Function', theory_text: 'Create a function calculator(x, y, operation):\n- If operation == "add", return x + y\n- If "subtract", return x - y\n- If "multiply", return x * y\n- If "divide", return x / y\n- Otherwise return "Invalid operation"\n\nTest it with different inputs.' },
 
 ];
 
