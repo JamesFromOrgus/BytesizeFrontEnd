@@ -15,7 +15,6 @@ import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 import TheoryBlock from '../Molecules/TheoryBlock';
 import MultiChoice from '../Molecules/MultiChoice';
-import MatchTermToDefinition from '../Molecules/Match';
 
 // ─── lesson content ────────────────────────────────────────────────────────────
 // Each item in this array is one "step" in the lesson.
@@ -28,26 +27,31 @@ const LESSON_STEPS = [
     title: 'what are the loops?',
     theory_text: 'loops allow your program to repeat actions without writing the same code multiple times. python has two main types:\nfor loops (sequential)\nwhile loops (conditional)'
   },
+
   {
     type: 'theory',
     title: 'for loops',
     theory_text: 'for loops are good at looping for specific number of times.\nbasic example: for x in [1, 2, 3]:\n  print(x)'
   },
+
   {
     type: 'theory',
     title: 'looping over a string',
     theory_text: 'for char in "hello":\n  print(char)'
   },
+
   {
     type: 'theory',
     title: 'for loop examples',
     theory_text: 'looping using range()\nfor i in range(5)\n  print(i)\n\nrange variants also exist in the loops in the following pattern: range(start, stop, step). for example:\nfor i in range(10, 0, -2)\n  print(i)'
   },
+
   {
     type: 'theory',
     title: 'while loop',
     theory_text: 'while loops iterate until a condition is met\ncount = 0 while(count < 5):\n  print(count)\n  count+= 1'
   },
+
   {
     type: 'multichoice',
     title: 'find an infinite loop',
@@ -57,6 +61,7 @@ const LESSON_STEPS = [
       { text: 'c = 4\nwhile c = 3:\n   print("c)', correct: false}
     ]
   },
+
   {
     type: 'multichoice',
     title: 'an if statement can be used within a loop statement',
@@ -65,6 +70,7 @@ const LESSON_STEPS = [
       { text: 'B: False', correct: true}
     ]
   },
+  
   {
     type: 'theory',
     title: 'extra challenge!',

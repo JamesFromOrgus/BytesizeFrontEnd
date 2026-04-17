@@ -10,58 +10,58 @@ import MatchTermToDefinition from '../Molecules/Match';
 const LESSON_STEPS = [
   {
       type: 'theory',
-      title: 'What are Operators',
-      theory_text: 'Operators are special symbols in Python that perform actions on values and variables.\n You ' +
+      title: 'what are the operators?',
+      theory_text: 'operators are special symbols in python that perform actions on values and variables.\n you ' +
           'can think of them as tools that allow Python to calculate, compare or modify data.',
   },
     {
         type: 'theory',
-        title: 'Basic Operators',
-        theory_text:'+ (Addition) 5+3 = 8' +
-            '\n - (Subtraction) 10 - 7 = 3' +
+        title: 'basic operators',
+        theory_text:'+ (addition) 5+3 = 8' +
+            '\n - (subtraction) 10 - 7 = 3' +
             '\n * (multiplication) 4 * 3 = 12' +
             '\n / (division) 8/2 = 4.0' +
-            '\n // (Floor division) 9//4 = 2' +
+            '\n // (floor division) 9//4 = 2' +
             '\n % (modulus) 10 % 3 = 1' +
             '\n ** (exponent) 2**3 = 8 ',
     },
     {
         type: 'theory',
-        title: 'Assignment Operators',
-        theory_text: 'Used to assign values to variables' +
-            '\n = (Assign) x = 5' +
-            '\n += (Add and assign) x += 2' +
-            '\n -= (Subtract and assign) x -= 1' +
-            '\n *= (Multiply and assign) x *= 3' +
-            '\n /= (Divide and assign) x /= 2' +
-            '\n **= (Power and assign) x **= 2' +
-            '\n DISCLAIMER: Assignment operators only work with specific data types',
+        title: 'assignment operators',
+        theory_text: 'used to assign values to variables' +
+            '\n = (assign) x = 5' +
+            '\n += (add and assign) x += 2' +
+            '\n -= (subtract and assign) x -= 1' +
+            '\n *= (multiply and assign) x *= 3' +
+            '\n /= (divide and assign) x /= 2' +
+            '\n **= (power and assign) x **= 2' +
+            '\n DISCLAIMER: assignment operators only work with specific data types',
     },
     {
         type: 'theory',
-        title: 'Comparison Operators',
-        theory_text: 'Compares values and outputs a boolean result\n' +
-            '== (Equal) 5 == 5 True\n' +
-            '!= (Not equal) 5 != 3 True\n' +
-            '> (Greater than) 7 > 2 True\n' +
-            '< (Less than) 3 < 1 False\n' +
-            '>= (Greater or equal) 5 >= 5 True\n' +
-            '<= (Less or equal) 4 <= 2 False'
+        title: 'comparison operators',
+        theory_text: 'compares values and outputs a boolean result\n' +
+            '== (equal) 5 == 5 True\n' +
+            '!= (not equal) 5 != 3 True\n' +
+            '> (greater than) 7 > 2 True\n' +
+            '< (less than) 3 < 1 False\n' +
+            '>= (greater or equal) 5 >= 5 True\n' +
+            '<= (less or equal) 4 <= 2 False'
     },
     {
         type: 'match',
-        title: 'Match the operator types',
+        title: 'Mmtch the operator types',
         pairs: [
-            {term:'+',definition:"Arithmetic"},
-            {term:'>',definition:"Comparison"},
-            {term:'/',definition:"Mathematical"}
+            {term:'+',definition:"arithmetic"},
+            {term:'>',definition:"comparison"},
+            {term:'=',definition:"assignment"}
         ]
     },
     {
         type: 'multichoice',
-        title: 'What does % do in python?',
+        title: 'what does % do in python?',
         options: [
-            {text: 'Calculates the percentage of a value', correct: false},
+            {text: 'calculates the percentage of a value', correct: false},
             {text: '2 values are divided and the remainder is displayed', correct: true},
             {text: '2 values are divided and the remainder is discarded', correct: false},
             {text: 'all of the above', correct: false},
@@ -69,7 +69,7 @@ const LESSON_STEPS = [
     },
     {
         type: 'multichoice',
-        title: 'What is the value of 4**3?',
+        title: 'what is the value of 4**3?',
         options: [
             {text: '8', correct: false},
             {text: '12', correct: false},
@@ -79,7 +79,7 @@ const LESSON_STEPS = [
     },
     {
         type: 'match',
-        title: 'Match the comparative operators',
+        title: 'match the comparative operators',
         pairs: [
             {term:'12 > 14', definition:"false"},
             {term:'4 <= 4', definition:"true"}

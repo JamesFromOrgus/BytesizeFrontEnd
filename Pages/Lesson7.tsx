@@ -10,16 +10,100 @@ import {
   Platform,             
 } from 'react-native';
 import { useRef, useState } from 'react';
+import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 import TheoryBlock from '../Molecules/TheoryBlock';
 import MultiChoice from '../Molecules/MultiChoice';
-import Match from '../Molecules/Match'; 
+import FillInTheBlanks from '../Molecules/FillInTheBlanks';
+import Flashcards from '../Molecules/Flashcards';
+import MatchTermToDefinition from '../Molecules/Match';
+
+// ─── lesson content ────────────────────────────────────────────────────────────
+// Each item in this array is one "step" in the lesson.
+// The `type` field tells the renderer which component to show.
+// Adding new steps is as simple as pushing another object here.
 
 const LESSON_STEPS = [
+  {
+    type: 'theory',
+    title: 'loop control statements',
+    theory_text: 'break – stop the loop immidiately\nfor i in range(10):\n    if i == 5:\n        break\n    print(i)'
+  },
 
-  { type: 'theory', title: 'coming soon', theory_text: 'this lesson is still being written. check back later!' },
+  {
+    type: 'theory',
+    title: 'loop control statements',
+    theory_text: 'continue – skip current iteration immidiately\nfor i in range(10):\n    if i == 5:\n        continue\n    print(i)'
+  },
 
+  {
+    type: 'theory',
+    title: 'loop control statements',
+    theory_text: 'pass – placeholder\nfor i in range(3):\n    pass'
+  },
+
+  {
+    type: 'theory',
+    title: 'looping through collections',
+    theory_text: 'lists like these: fruits = ["apple", "banana"] are iterable.\n\nfor f in fruits:\n    print(f)'
+  },
+
+  {
+    type: 'theory',
+    title: 'looping through collections',
+    theory_text: 'dictionaries are looped through the keys\n\nfor key in student:\n    print(key)\n\nlooping through values\nfor value in student.values():\n    print(value)\n\nlooping through key-value pairs\nfor key, value in student.items():\n    print(key, value)'
+  },
+
+  {
+    type: 'theory',
+    title: 'nested loops',
+    theory_text: 'for x in range(3)\n    for y in range(2):\n        print(x, y)'
+  },
+
+  {
+    type: 'theory',
+    title: 'combining loops with conditions',
+    theory_text: 'numbers = [1, 4, 6, 7, 10]\nfor i in numbers:\n    if n % 2 == 0:\n         print(n, "is even")\n    else:\n         print(n, "is odd")'
+  },
+
+  {
+    type: 'multichoice',
+    title: 'given the previous algorithm and a list nums = [3, 10, 7, 2, 9, 12], which numbers are even?',
+    options: [
+      { text: '3, 10, 2, 12', correct: false },
+      { text: '10, 2, 12', correct: true }
+    ]
+  },
+
+  {
+    type: 'theory',
+    title: 'extra challenge',
+    theory_text: 'write an algorithm calculating the sum of numbers from 1 to 100.'
+  },
+
+  {
+    type: 'multichoice',
+    title: 'which of the following are the loop control statements?',
+    options: [
+      { text: 'pause, continue, pass', correct: false },
+      { text: 'break, pass, continue', correct: true },
+      { text: 'pass, loop, pause', correct: false },
+      { text: 'class, continue, break', correct: false}
+    ]
+  },
+
+  {
+    type: 'theory',
+    title: 'extra exercise: searching',
+    theory_text: 'using break loop through a list of colours, stop when you find blue and print the result'
+  },
+
+  {
+    type: 'theory',
+    title: 'advanced challenge',
+    theory_text: 'create a loop that keeps asking yser for a password until they enter a correct one\n\nfor example: correct_password = "python_1234"\n and then print "access granted" when the user enters the correct password'
+  }
 ];
 
 // ─── component ─────────────────────────────────────────────────────────────────
@@ -83,16 +167,6 @@ export default function Lesson7({ setPage }: PageProps) {
             title={step.title!}
             options={step.options!}
             // Only advance on a correct answer; wrong answers are retried in-place
-            callback={(correct) => { if (correct) advance(); }}
-          />
-        );
-
-      case 'match':
-        return (
-          <Match
-            key={index}
-            title={step.title!}
-            pairs={step.pairs!}
             callback={(correct) => { if (correct) advance(); }}
           />
         );

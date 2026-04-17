@@ -19,31 +19,31 @@ import Match from '../Molecules/Match';
 const LESSON_STEPS = [
   {
     type: 'theory',
-    title: 'What are Conditionals?',
+    title: 'what are conditionals?',
     theory_text:
-      'Conditionals let your code make decisions based on Boolean logic (True or False).\n\nThe "if" statement evaluates a condition. If the condition is True, the indented block of code underneath it runs. If it is False, the code is skipped entirely.',
+      'conditionals let your code make decisions based on boolean logic (True or False).\n\nthe "if" statement evaluates a condition. if the condition is true, the indented block of code underneath it runs. if it is false, the code is skipped entirely.',
   },
   {
     type: 'theory',
-    title: 'Elif and Else',
+    title: 'elif and else statements',
     theory_text:
-      '• elif (else if): Checks another condition, but ONLY if the preceding "if" was False.\n• else: Acts as a catch-all at the very end. It strictly catches anything else if all above conditions were False. It does NOT take a condition itself!',
+      '• elif (else if): checks another condition, but ONLY if the preceding "if" was false.\n• else: acts as a catch-all at the very end. it strictly catches anything else if all above conditions were false. it does NOT take a condition itself!',
   },
   {
     type: 'theory',
-    title: 'Indentation is Key',
+    title: 'indentation is key',
     theory_text:
-      'In Python, code inside an if-statement MUST be indented (pushed to the right using spaces or tab). This visual block is how Python knows which lines of code belong to that specific condition.',
+      'in python, code inside an if-statement MUST be indented (pushed to the right using spaces or tab). this visual block is how python knows which lines of code belong to that specific condition.',
   },
   {
     type: 'theory',
     title: 'If/If vs. If/Elif',
     theory_text:
-      'If you use two "if" statements in a row, Python evaluates BOTH of them. If both are true, both blocks of code run.\n\nIf you use "if" followed by "elif", Python stops checking as soon as it finds the FIRST true statement and ignores the rest.',
+      'if you use two "if" statements in a row, python evaluates BOTH of them. if both are true, both blocks of code run.\n\nif you use "if" followed by "elif", python stops checking as soon as it finds the FIRST true statement and ignores the rest.',
   },
   {
     type: 'multichoice',
-    title: 'Are conditional statements based on boolean logic?',
+    title: 'are conditional statements based on boolean logic?',
     options: [
       { text: 'Yes', correct: true },
       { text: 'No', correct: false },
@@ -51,7 +51,7 @@ const LESSON_STEPS = [
   },
   {
     type: 'multichoice',
-    title: 'Which keywords are used for conditionals in Python?',
+    title: 'which keywords are used for conditionals in Python?',
     options: [
       { text: 'when, then, otherwise', correct: false },
       { text: 'if, elif, else', correct: true },
@@ -60,7 +60,7 @@ const LESSON_STEPS = [
   },
   {
     type: 'multichoice',
-    title: 'How many comparison operators (like >, <, ==) can you use in a conditional?',
+    title: 'how many comparison operators (like >, <, ==) can you use in a conditional?',
     options: [
       { text: 'None', correct: false },
       { text: 'Some', correct: false },
@@ -70,7 +70,7 @@ const LESSON_STEPS = [
   },
   {
     type: 'multichoice',
-    title: 'Which of the values evaluates as True',
+    title: 'which of the values evaluates as True',
     options: [
       { text: '[]', correct: false},
       { text: '"" (Empty string)', correct: false},
@@ -80,16 +80,16 @@ const LESSON_STEPS = [
   },
   {
     type: 'theory',
-    title: 'IDE Challenge: Grade Evaluator',
+    title: 'ide challenge: drade evaluator',
     theory_text:
-      'Time to practice in your ide! Write a program using if/elif/else statements that takes a score (0–100) and prints the correct grade:\n\n• 90–100 → "A"\n• 80–89 → "B"\n• 70–79 → "C"\n• 60–69 → "D"\n• Below 60 → "F"\n\nBonus: If the score is outside the 0–100 range, print "Invalid score"!',
+      'time to practice in your ide! write a program using if/elif/else statements that takes a score (0–100) and prints the correct grade:\n\n• 90–100 → "A"\n• 80–89 → "B"\n• 70–79 → "C"\n• 60–69 → "D"\n• Below 60 → "F"\n\nbonus: if the score is outside the 0–100 range, print "invalid score"!',
   },
   {
     type: 'multichoice',
-    title: 'If age = 15, what will the conditional "13 <= age <= 19" evaluate to?',
+    title: 'if age = 15, what will the conditional "13 <= age <= 19" evaluate to?',
     options: [
-      { text: 'True (Teenager)', correct: true },
-      { text: 'False (Not a teenager)', correct: false },
+      { text: 'True (teenager)', correct: true },
+      { text: 'False (not a teenager)', correct: false },
     ],
   },
 ];
@@ -155,16 +155,6 @@ export default function Lesson5({ setPage }: PageProps) {
             title={step.title!}
             options={step.options!}
             // Only advance on a correct answer; wrong answers are retried in-place
-            callback={(correct) => { if (correct) advance(); }}
-          />
-        );
-
-      case 'match':
-        return (
-          <Match
-            key={index}
-            title={step.title!}
-            pairs={step.pairs!}
             callback={(correct) => { if (correct) advance(); }}
           />
         );

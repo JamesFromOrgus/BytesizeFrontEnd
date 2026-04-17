@@ -19,25 +19,25 @@ import Match from '../Molecules/Match';
 const LESSON_STEPS = [
   {
     type: 'theory',
-    title: 'Logical Operators',
+    title: 'logical operators',
     theory_text:
-      'Logical operators combine multiple conditions to give a final True or False verdict (True or False).\n\nand - Both must be True (e.g., (5 > 3) and (2 > 1))\nor - At least one must be true (e.g., (5 > 3) or (2 > 1))\nnot - Reverses True/False (e.g., Not True = False)',
+      'logical operators combine multiple conditions to give a final true or false verdict (True or False).\n\nand - both must be true (e.g., (5 > 3) and (2 > 1))\nor - at least one must be true (e.g., (5 > 3) or (2 > 1))\nnot - reverses True/False (e.g., Not True = False)',
   },
   {
     type: 'theory',
-    title: 'Membership & Identity Operations',
+    title: 'membership & identity operations',
     theory_text:
-      'Identity checks if two variables refer to the same object:\nis - Same object (A is b)\nis not - Not same object (A is not b)\n\nMembership checks if a value is in a sequence:\nin - Is item inside (A in cat)\nnot in - Is item not inside (3 not in 1,2,4)',
+      'identity checks if two variables refer to the same object:\nis - same object (a is b)\nis not - not same object (a is not b)\n\nmembership checks if a value is in a sequence:\nin - is item inside (a in cat)\nnot in - is item not inside (3 not in 1,2,4)',
   },
   {
     type: 'theory',
-    title: 'Operator Precedence',
+    title: 'operator precedence',
     theory_text:
-      'Python follows mathematical order:\n1. Parentheses ()\n2. Exponents **\n3. Multiplication/Division * / // %\n4. Addition/Subtraction + -\n5. Comparisons == != > < >= <=\n6. Logical operators and, or, not',
+      'python follows mathematical order:\n1. parentheses ()\n2. exponents **\n3. multiplication/division * / // %\n4. addition/subtraction + -\n5. comparisons == != > < >= <=\n6. logical operators and, or, not',
   },
   {
     type: 'multichoice',
-    title: 'Calculate the following: 17 // 3',
+    title: 'calculate the following: 17 // 3',
     options: [
       { text: '5.66', correct: false },
       { text: '5', correct: true },
@@ -47,7 +47,7 @@ const LESSON_STEPS = [
   },
   {
     type: 'multichoice',
-    title: 'Calculate the following: (10+3) * 2',
+    title: 'calculate the following: (10+3) * 2',
     options: [
       { text: '16', correct: false },
       { text: '20', correct: false },
@@ -57,7 +57,7 @@ const LESSON_STEPS = [
   },
   {
     type: 'multichoice',
-    title: 'State if true or false',
+    title: 'state if true or false',
     options: [
       { text: '10 == 7', correct: false },
       { text: '5 <= 4', correct: false },
@@ -67,7 +67,7 @@ const LESSON_STEPS = [
   },
   {
     type: 'match',
-    title: 'Match the operator to its precedence order (1 is first)',
+    title: 'match the operator to its precedence order (1 is first)',
     pairs: [
       { term: '-', definition: '4' },
       { term: '()', definition: '1' },
@@ -77,7 +77,7 @@ const LESSON_STEPS = [
   },
   {
     type: 'multichoice',
-    title: 'Start with x = 10. What is x after: x += 5 ?',
+    title: 'start with x = 10. What is x after: x += 5 ?',
     options: [
       { text: '5', correct: false },
       { text: '15', correct: true },
@@ -87,7 +87,7 @@ const LESSON_STEPS = [
   },
   {
     type: 'multichoice',
-    title: "fruits = ['apple', 'banana', 'orange']\nIs 'grape' not in fruits?",
+    title: "fruits = ['apple', 'banana', 'orange']\nis 'grape' not in fruits?",
     options: [
       { text: 'True', correct: true },
       { text: 'False', correct: false },
@@ -95,9 +95,9 @@ const LESSON_STEPS = [
   },
   {
     type: 'theory',
-    title: 'Bonus: Expressions',
+    title: 'bonus: expressions',
     theory_text:
-      'An expression is a combination of values, variables, and operators that Python evaluates. Try some in your ide\n\nExamples:\n5 + 3 * 2\nx > 10 and y < 5\n"Hello " + "World"',
+      'an expression is a combination of values, variables, and operators that python evaluates. try some in your ide\n\nexamples:\n5 + 3 * 2\nx > 10 and y < 5\n"hello " + "world"',
   },
 ];
 

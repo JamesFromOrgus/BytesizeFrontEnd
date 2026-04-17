@@ -36,12 +36,12 @@ const LESSON_STEPS = [
     type: 'theory',
     title: 'cases',
     theory_text:
-        'Programmers have different case standards but they often fall into 3 categories:\n camelCase \n PascalCase \n snake_case',
+        'programmers have different case standards but they often fall into 3 categories:\n camelCase \n PascalCase \n snake_case',
 
   },
   {
     type: 'multichoice',
-    title:'Which variable types are correct',
+    title:'which variable types are correct?',
     options:[
       {text:'Int',correct:true},
       {text:'Num',correct:false},
