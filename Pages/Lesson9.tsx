@@ -14,17 +14,80 @@ import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 import TheoryBlock from '../Molecules/TheoryBlock';
 import MultiChoice from '../Molecules/MultiChoice';
-import Match from '../Molecules/Match'; 
+import FillInTheBlanks from '../Molecules/FillInTheBlanks';
+import MatchTermToDefinition from '../Molecules/Match';
+
+// ─── lesson content ────────────────────────────────────────────────────────────
+// Each item in this array is one "step" in the lesson.
+// The `type` field tells the renderer which component to show.
+// Adding new steps is as simple as pushing another object here.
 
 const LESSON_STEPS = [
+  {
+    type: 'theory',
+    title: 'what is a function?',
+    theory_text: 'a function is a reusable block of coe that performs a specific task. you may think of it like a machine. you provide optional input, it performs action and may return the result.\n\nfunctions help making programs cleaner, shorter and easier to understand.'
+  },
 
-  { type: 'theory', title: 'coming soon', theory_text: 'this lesson is still being written. check back later!' },
+  {
+    type: 'theory',
+    title: 'defining a function',
+    theory_text: 'use the def keyword\n\nbasic function\ndef greet()\n   print("Hello!")\n\nto run the function, simply use greet()'
+  },
 
+  {
+    type: 'theory',
+    title: 'functions with parameters',
+    theory_text: 'parameters allow your function to accept input.\n\ndef greet(name)\n    print("Hello", name)\n\nnow try calling it: greet("Rhys").\nbare in mind that a function can accept multiple parameters!'
+  },
+
+  {
+    type: 'theory',
+    title: 'return',
+    theory_text: 'functions can send back a value using a return statement\ndef multiply(x, y)\n    return x * y\n\nhence why, using the result we can try now this:\nresult = multiply(3, 5)\nprint(result)'
+  },
+
+  {
+    type: 'theory',
+    title: 'default parameter values',
+    theory_text: 'you can assign default values to parameters:\ndef welcome(name="Guest")\n    print("Welcome", name)\n\nwe can call the function by using either welcome() or welcome("Alice").'
+  },
+
+  {
+    type: 'theory',
+    title: 'keyword arguments',
+    theory_text: 'you can specify arguments by name:\n\ndef profile(name, age)\n    print(name, age)\n\nprofile(age = 20, name = "Adam")'
+  },
+
+  {
+    type: 'multichoice',
+    title: 'what part of the syntax is out of place here?\ndef greet user (name, age):\n...',
+    options: [
+      { text: 'missing plus sign', correct: false },
+      { text: 'wrong variable name', correct: false },
+      { text: 'wrong function name', correct: true}
+    ]
+  },
+
+  {
+    type: 'theory',
+    title: 'basic function challenge',
+    theory_text: 'create a function called say_hello that prints "Hello World!". call it twice.'
+  },
+
+  {
+    type: 'multichoice',
+    title: 'return v. print\nprint and returns are exactly the same',
+    options: [
+      { text: 'true', correct: false },
+      { text: 'false', correct: true}
+    ]
+  }
 ];
 
 // ─── component ─────────────────────────────────────────────────────────────────
 
-export default function Lesson9({ setPage }: PageProps) {
+export default function Lesson1({ setPage }: PageProps) {
   const { width } = useWindowDimensions();
 
   // How many steps are currently visible (starts at 1 — only the first block shown)
@@ -83,16 +146,6 @@ export default function Lesson9({ setPage }: PageProps) {
             title={step.title!}
             options={step.options!}
             // Only advance on a correct answer; wrong answers are retried in-place
-            callback={(correct) => { if (correct) advance(); }}
-          />
-        );
-
-      case 'match':
-        return (
-          <Match
-            key={index}
-            title={step.title!}
-            pairs={step.pairs!}
             callback={(correct) => { if (correct) advance(); }}
           />
         );

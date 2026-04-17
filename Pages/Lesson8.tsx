@@ -10,13 +10,10 @@ import {
   Platform,             
 } from 'react-native';
 import { useRef, useState } from 'react';
-import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 import TheoryBlock from '../Molecules/TheoryBlock';
 import MultiChoice from '../Molecules/MultiChoice';
-import FillInTheBlanks from '../Molecules/FillInTheBlanks';
-import MatchTermToDefinition from '../Molecules/Match';
 
 // ─── lesson content ────────────────────────────────────────────────────────────
 // Each item in this array is one "step" in the lesson.
