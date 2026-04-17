@@ -10,16 +10,66 @@ import {
   Platform,             
 } from 'react-native';
 import { useRef, useState } from 'react';
+import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 import TheoryBlock from '../Molecules/TheoryBlock';
 import MultiChoice from '../Molecules/MultiChoice';
-import Match from '../Molecules/Match'; 
+import MatchTermToDefinition from '../Molecules/Match';
+
+// ─── lesson content ────────────────────────────────────────────────────────────
+// Each item in this array is one "step" in the lesson.
+// The `type` field tells the renderer which component to show.
+// Adding new steps is as simple as pushing another object here.
 
 const LESSON_STEPS = [
-
-  { type: 'theory', title: 'coming soon', theory_text: 'this lesson is still being written. check back later!' },
-
+  {
+    type: 'theory',
+    title: 'what are the loops?',
+    theory_text: 'loops allow your program to repeat actions without writing the same code multiple times. python has two main types:\nfor loops (sequential)\nwhile loops (conditional)'
+  },
+  {
+    type: 'theory',
+    title: 'for loops',
+    theory_text: 'for loops are good at looping for specific number of times.\nbasic example: for x in [1, 2, 3]:\n  print(x)'
+  },
+  {
+    type: 'theory',
+    title: 'looping over a string',
+    theory_text: 'for char in "hello":\n  print(char)'
+  },
+  {
+    type: 'theory',
+    title: 'for loop examples',
+    theory_text: 'looping using range()\nfor i in range(5)\n  print(i)\n\nrange variants also exist in the loops in the following pattern: range(start, stop, step). for example:\nfor i in range(10, 0, -2)\n  print(i)'
+  },
+  {
+    type: 'theory',
+    title: 'while loop',
+    theory_text: 'while loops iterate until a condition is met\ncount = 0 while(count < 5):\n  print(count)\n  count+= 1'
+  },
+  {
+    type: 'multichoice',
+    title: 'find an infinite loop',
+    options: [
+      { text: 'n = 3\nwhile n = 3:\n   print("n")', correct: true },
+      { text: 'while False\n   print("true")', correct: false },
+      { text: 'c = 4\nwhile c = 3:\n   print("c)', correct: false}
+    ]
+  },
+  {
+    type: 'multichoice',
+    title: 'an if statement can be used within a loop statement',
+    options: [
+      { text: 'A: True', correct: false },
+      { text: 'B: False', correct: true}
+    ]
+  },
+  {
+    type: 'theory',
+    title: 'extra challenge!',
+    theory_text: 'counting down\nuse range() statement to print: 10, 9, 8 and so on until you reach 1'
+  }
 ];
 
 // ─── component ─────────────────────────────────────────────────────────────────
@@ -83,16 +133,6 @@ export default function Lesson6({ setPage }: PageProps) {
             title={step.title!}
             options={step.options!}
             // Only advance on a correct answer; wrong answers are retried in-place
-            callback={(correct) => { if (correct) advance(); }}
-          />
-        );
-
-      case 'match':
-        return (
-          <Match
-            key={index}
-            title={step.title!}
-            pairs={step.pairs!}
             callback={(correct) => { if (correct) advance(); }}
           />
         );
