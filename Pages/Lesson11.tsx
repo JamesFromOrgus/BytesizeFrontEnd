@@ -30,14 +30,13 @@ const LESSON_STEPS = [
     { text: 'changeable', correct: true },
     { text: 'unordered', correct: false },
     { text: 'enclosed within {}', correct: false },
-    { text: 'unchangeable', correct: false },
-    { text: 'ordered', correct: true },
+    { text: 'unchangeable', correct: false }
   ] },
 
-  { type: 'match', title: 'Match the indices', pairs: [
-    { left: 'Blueberry', right: '4' },
-    { left: 'Orange', right: '2' },
-    { left: 'Apple', right: '0' },
+  { type: 'match', title: 'match the indices\nfruits = ["apple", "banana", "orange", "pear", "blueberry"]', pairs: [
+    { term: 'blueberry', definition: '4' },
+    { term: 'orange', definition: '2' },
+    { term: 'apple', definition: '0' },
   ] },
 
   { type: 'multichoice', title: 'What does reverse() do?', options: [

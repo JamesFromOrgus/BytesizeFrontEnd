@@ -24,7 +24,7 @@ const LESSON_STEPS = [
 
   { type: 'theory', title: 'Why Functions?', theory_text: 'Avoid repeating code.\nMake programs easier to read.\nOrganise logic into reusable pieces.\nEasier debugging and maintenance.' },
 
-  { type: 'multichoice', title: 'Fill in the blank', options: [
+  { type: 'multichoice', title: 'which variable is in the global scope?', options: [
     { text: 'local variable', correct: false },
     { text: 'global variable', correct: true },
     { text: 'temporary variable', correct: false },
@@ -32,7 +32,7 @@ const LESSON_STEPS = [
 
   { type: 'theory', title: 'Write a function', theory_text: 'Write a function:\ndef display_user(**info):\nPrint all key-value pairs inside it.' },
 
-  { type: 'multichoice', title: 'Nested functions', options: [
+  { type: 'multichoice', title: 'can you put a function inside a function?', options: [
     { text: 'True', correct: true },
     { text: 'False', correct: false },
   ] },
@@ -102,16 +102,6 @@ export default function Lesson10({ setPage }: PageProps) {
             title={step.title!}
             options={step.options!}
             // Only advance on a correct answer; wrong answers are retried in-place
-            callback={(correct) => { if (correct) advance(); }}
-          />
-        );
-
-      case 'match':
-        return (
-          <Match
-            key={index}
-            title={step.title!}
-            pairs={step.pairs!}
             callback={(correct) => { if (correct) advance(); }}
           />
         );
