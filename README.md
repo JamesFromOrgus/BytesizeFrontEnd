@@ -233,8 +233,6 @@ git push origin main
 | Android emulator won't start | Verify Android Studio setup and AVD creation |
 | iOS simulator issues (macOS) | Run `xcode-select --install` |
 
-**For detailed troubleshooting:** See [SETUP.md](./SETUP.md#troubleshooting)
-
 ---
 
 ## Resources
