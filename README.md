@@ -44,8 +44,6 @@ npm install
 npm start
 ```
 
-**Full setup instructions:** See [SETUP.md](./SETUP.md) for detailed platform-specific installation guides.
-
 ---
 
 ## Tech Stack
