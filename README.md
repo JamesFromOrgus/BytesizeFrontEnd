@@ -44,7 +44,7 @@ npm install
 npm start
 ```
 
-**📖 Full setup instructions:** See [SETUP.md](./SETUP.md) for detailed platform-specific installation guides.
+**Full setup instructions:** See [SETUP.md](./SETUP.md) for detailed platform-specific installation guides.
 
 ---
 
@@ -82,11 +82,11 @@ BytesizeFrontEnd/
 ByteSize features a bold Neo-brutalist design with:
 
 - **Color Palette**: 
-  - 🟠 Orange (Primary courses)
-  - 🔵 Blue (Secondary courses)
-  - 🟢 Green (Featured/Active)
-  - ⚫ Black (Borders & text)
-  - ⚪ White (Backgrounds)
+  - Orange (Primary courses)
+  - Blue (Secondary courses)
+  - Green (Featured/Active)
+  - Black (Borders & text)
+  - White (Backgrounds)
 
 - **Typography**: Montserrat SemiBold (600)
 - **UI Elements**: Thick black borders, rounded corners, flat colors
@@ -94,7 +94,7 @@ ByteSize features a bold Neo-brutalist design with:
 
 ---
 
-## 📱 Available Scripts
+## Available Scripts
 
 | Command | Description |
 |---------|-------------|
@@ -217,7 +217,3 @@ This project is part of an educational initiative. All rights reserved.
 
 For questions or support:
 - GitHub Issues: [Report a bug](https://github.com/JamesFromOrgus/BytesizeFrontEnd/issues)
-
----
-
-**Happy Learning! 📚✨**
