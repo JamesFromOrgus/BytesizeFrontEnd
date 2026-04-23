@@ -1,8 +1,8 @@
-# ByteSize
+# bytesize.
 
 > A mobile-first educational platform built with React Native and Expo
 
-ByteSize is an interactive learning application that delivers bite-sized courses in a modern, engaging interface. Designed with a Neo-brutalist aesthetic, ByteSize makes education accessible, fun, and visually striking.
+bytesize. is an interactive learning application that delivers bite-sized courses in a modern, engaging interface. Designed with a Neo-brutalist aesthetic, ByteSize makes education accessible, fun, and visually striking.
 
 ---
 
@@ -63,14 +63,80 @@ npm start
 ## Project Structure
 
 ```
-BytesizeFrontEnd/
-├── assets/              # Images, icons, and static resources
-├── Atoms/               # Smallest UI components (buttons, inputs, toggles)
-├── Molecules/           # Composed components (flashcards, quiz questions)
-├── Pages/               # Screen components (Home, Lessons, Account)
-├── App.tsx              # Main application entry
-├── StyleVariables.tsx   # Design system (colors, typography)
-└── package.json         # Dependencies and scripts
+bytesize/
+├── .expo/                      # Expo configuration cache (auto-generated)
+├── .vscode/                    # VSCode workspace settings
+├── assets/                     # Images, icons, and static resources
+│   ├── accounts-icon.png
+│   ├── accounts-selected-icon.png
+│   ├── adaptive-icon.png
+│   ├── back-arrow.png
+│   ├── cartoonpfp-2.jpg
+│   ├── cartoonpfp-3.jpg
+│   ├── cartoonpfp-4.jpg
+│   ├── cartoonpfp.jpg
+│   ├── ellipse-black.png
+│   ├── ellipse.png
+│   ├── favicon.png
+│   ├── graph-cat.png
+│   ├── home-icon.png
+│   ├── home-selected-icon.png
+│   ├── icon.png
+│   ├── lesson-selection-ellipse.png
+│   ├── page-locator-centre.png
+│   ├── page-locator-right.png
+│   ├── pattern-black.png
+│   ├── pattern.png
+│   ├── splash-icon.png
+│   └── star.png
+│
+├── Atoms/                      # Atomic design: smallest UI components
+│   ├── Button.tsx              # Reusable button component
+│   ├── InputBox.tsx            # Text input component
+│   └── Toggle.tsx              # Toggle switch component
+│
+├── Molecules/                  # Composed components from atoms
+│   ├── dummy_molecule.tsx      # Example molecule component
+│   ├── FillInTheBlanks.tsx     # Fill-in-the-blanks exercise
+│   ├── Flashcards.tsx          # Flashcard learning component
+│   ├── Match.tsx               # Matching game component
+│   ├── MultiChoice.tsx         # Multiple choice question
+│   ├── MultiChoiceOption.tsx   # Individual multiple choice option
+│   └── TheoryBlock.tsx         # Theory/content block component
+│
+├── Pages/                      # Screen components (full pages)
+│   ├── AccountPage.tsx         # User account page
+│   ├── CourseLessonsPage.tsx   # Course lesson listing
+│   ├── HomePage.tsx            # Main home screen
+│   ├── Lesson1.tsx             # Individual lesson screens
+│   ├── Lesson2.tsx
+│   ├── Lesson3.tsx
+│   ├── Lesson4.tsx
+│   ├── Lesson5.tsx
+│   ├── Lesson6.tsx
+│   ├── Lesson7.tsx
+│   ├── Lesson8.tsx
+│   ├── Lesson9.tsx
+│   ├── Lesson10.tsx
+│   ├── Lesson11.tsx
+│   ├── LessonPage.tsx          # Lesson container/wrapper
+│   ├── LessonSuccessPage.tsx   # Lesson completion screen
+│   ├── LoginPage.tsx           # User login screen
+│   ├── OnboardingPage.tsx      # First-time user onboarding
+│   ├── RegisterPage.tsx        # User registration screen
+│   ├── SettingsPage.tsx        # App settings screen
+│   └── StartPage.tsx           # Initial landing page
+│
+├── node_modules/               # Installed dependencies (auto-generated)
+├── .gitignore                  # Git ignore rules
+├── app.json                    # Expo application configuration
+├── App.tsx                     # Main application entry point
+├── index.ts                    # Root index file
+├── package.json                # Project dependencies and scripts
+├── package-lock.json           # Locked dependency versions
+├── StyleVariables.tsx          # Global design system (colors, fonts)
+├── README.md                   # Project documentation
+└── tsconfig.json               # TypeScript compiler configuration
 ```
 
 **Component Architecture**: Follows [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) principles for scalable UI development.
