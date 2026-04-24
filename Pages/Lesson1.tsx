@@ -35,7 +35,7 @@ const LESSON_STEPS = [
     type: 'theory',
     title: 'why python?',
     theory_text:
-      'python has simple syntax, it is multiplatform, beginner friendly, interpretive and procedural with oop support.',
+      'python has a simple syntax, it is multiplatform, beginner friendly, interpretive and procedural with oop (object orientated programming) support.',
   },
   {
     type: 'theory',
@@ -87,7 +87,7 @@ const LESSON_STEPS = [
     pairs: [
       { term: 'machine code', definition: 'consists of binary' },
       { term: 'low level', definition: 'a language made of simple mnemonics' },
-      { term: 'high level', definition: 'closest spoken to english' },
+      { term: 'high level', definition: 'closest to spoken english' },
     ],
   },
   {
