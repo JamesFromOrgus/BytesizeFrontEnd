@@ -189,10 +189,8 @@ git push origin main
 **Commit Message Convention**:
 - `feat:` New features
 - `fix:` Bug fixes
-- `style:` UI/styling changes
 - `refactor:` Code restructuring
 - `docs:` Documentation updates
-- `chore:` Maintenance tasks
 
 ---
 
