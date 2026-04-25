@@ -6,9 +6,26 @@ import InputBox from '../Atoms/InputBox';
 import { PageProps } from '../App';
 import { useState } from 'react';
 
+import { attempt_login } from '../BackendConnectivity';
+
 export default function LoginPage( {setPage}: PageProps) {
   const [errorMsg, setError] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const { height,width } = useWindowDimensions(); // Needed for fine control on adataptive sizing for elements
+
+  async function handleLogin() {
+    setError('');
+
+    const token = await attempt_login(username, password);
+
+    if (token) {
+      console.log("Login successful:", token);
+      setPage('onboarding');
+    } else {
+      setError('Invalid username or password');
+    }
+  }
   
   return (
     <View style={styles.background}>
@@ -44,11 +61,25 @@ export default function LoginPage( {setPage}: PageProps) {
         <Text style={[styles.logo_text, {color: styleVariables.orange}]}>return<Text style={[styles.logo_text]}>ing user?</Text></Text>
       </View>
       <View style={{gap: 20, marginTop: 24}}>
-        <InputBox placeholder_text='username/email' autocomplete_hint='username'/>
-        <InputBox placeholder_text='password' autocomplete_hint='current-password' obfuscated={true}/>
-        <Button text={'login'} color={styleVariables.green} width={300} action={function (): void {
-          setPage('onboarding')
-        }}/>
+        <InputBox
+          placeholder_text='username/email'
+          autocomplete_hint='username'
+          value={username}
+          onChangeText={setUsername}
+        />
+        <InputBox
+          placeholder_text='password'
+          autocomplete_hint='current-password'
+          obfuscated={true}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <Button
+          text={'login'}
+          color={styleVariables.green}
+          width={300}
+          action={handleLogin}
+        />
       </View>
       {errorMsg.length > 0 && <Text style={styles.error_text}>Error: {errorMsg}</Text>}
       <StatusBar style="auto" />

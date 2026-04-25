@@ -4,10 +4,12 @@ import styleVariables from '../StyleVariables';
 type InputBoxData = {
     placeholder_text: string,
     autocomplete_hint?: TextInputProps["autoComplete"];
-    obfuscated?: boolean
+    obfuscated?: boolean,
+    value?: string,
+    onChangeText?: (text: string) => void,
 }
 
-export default function InputBox({ placeholder_text, autocomplete_hint, obfuscated }: InputBoxData) {
+export default function InputBox({ placeholder_text, autocomplete_hint, obfuscated, value, onChangeText }: InputBoxData) {
     return (
         <TextInput
         style={[styles.input_box_container, styles.placeholder_label]}
@@ -17,6 +19,8 @@ export default function InputBox({ placeholder_text, autocomplete_hint, obfuscat
         autoCapitalize='none'
         secureTextEntry={obfuscated ?? false}
         autoCorrect={false}
+        value={value}
+        onChangeText={onChangeText}
         />
     );
 }

@@ -4,6 +4,9 @@ import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 
+import { get_user_information, UserInfo } from '../BackendConnectivity';
+import { useEffect, useState } from 'react';
+
 // Course examples
 const COURSES = [
   { id: '1', title: 'python development', lessons: 20, color: styleVariables.orange },
@@ -15,6 +18,15 @@ const COURSES = [
 ];
 
 export default function HomePage({ setPage }: PageProps) {
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+
+  useEffect(() => {
+    async function logUserInfo() {
+      setUserInfo(await get_user_information());
+    }
+
+    logUserInfo();
+  }, []);
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -86,7 +98,7 @@ export default function HomePage({ setPage }: PageProps) {
 
       <StatusBar style="auto" />
     </View>
-  );
+    );
 }
 
 const styles = StyleSheet.create({

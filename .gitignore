@@ -20,5 +20,6 @@
 !App.tsx
 !index.ts
 !StyleVariables.tsx
+!BackendConnectivity.tsx
 
 # feel free to add to this

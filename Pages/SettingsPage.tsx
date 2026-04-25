@@ -1,11 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Pressable, useWindowDimensions, Modal, TextInput, Image } from 'react-native';
 import styleVariables from '../StyleVariables';
 import Button from '../Atoms/Button';
 import { PageProps } from '../App';
 
+import { get_user_information, UserInfo, logout } from '../BackendConnectivity';
+
 export default function SettingsPage({ setPage }: PageProps) {
+ const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+
+  useEffect(() => {
+    async function logUserInfo() {
+      setUserInfo(await get_user_information());
+    }
+
+    logUserInfo();
+  }, []);
+
   const { height,width } = useWindowDimensions(); // Needed for fine control on adataptive sizing for elements
   const [darkMode, setDarkMode] = useState(false); // variable for the darkmode switch
   const [isModalVisible, setIsModalVisible] = useState(false); // pop up hidden or not
@@ -24,9 +36,23 @@ export default function SettingsPage({ setPage }: PageProps) {
         
         {/*User Data */}
         <View style={styles.account_info_container}>
-          <Text style={styles.info_line}><Text style={styles.label}>name:</Text> <Text style={styles.value}>Nicholas Cage</Text></Text>
-          <Text style={styles.info_line}><Text style={styles.label}>email:</Text> <Text style={styles.value}>nicholascage@gmail.com</Text></Text>
-          <Text style={styles.info_line}><Text style={styles.label}>dob:</Text> <Text style={styles.value}>11/09/2002</Text></Text>
+          <Text style={styles.info_line}> <Text style={styles.label}>name:</Text>
+            <Text style={styles.value}>
+              {userInfo ? userInfo.FirstName + userInfo.LastName : "john doe" }
+            </Text>
+          </Text>
+          <Text style={styles.info_line}> <Text style={styles.label}>email:</Text> 
+            <Text style={styles.value}> 
+              {userInfo && userInfo.EmailAddress != "" ? userInfo.EmailAddress : "not added"} 
+            </Text>
+          </Text>
+          <Text style={styles.info_line}><Text style={styles.label}>dob:</Text> <Text style={styles.value}>
+            {userInfo && userInfo.DateOfBirth ?
+            userInfo.DateOfBirth.getDate().toString() + "/" +
+            (userInfo.DateOfBirth.getMonth()+1).toString() + "/" +
+            userInfo.DateOfBirth.getFullYear().toString()
+            : "not added"}
+            </Text></Text>
           <Text style={styles.info_line}><Text style={styles.label}>password:</Text> <Text style={styles.value}>.......</Text></Text>
           <Text style={styles.info_line}><Text style={styles.label}>profile:</Text> <Text style={styles.value}>private</Text></Text>
         </View>
@@ -148,7 +174,10 @@ export default function SettingsPage({ setPage }: PageProps) {
           color={styleVariables.orange} 
           width={250} 
           height={45} 
-          action={() => setPage('start')} 
+          action={() => {
+            logout();
+            setPage('start');
+          }} 
         />
       </View>
 

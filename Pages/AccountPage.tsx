@@ -1,9 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Animated, Image, Pressable, Modal, useWindowDimensions } from 'react-native';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
+
+import { get_user_information, UserInfo } from '../BackendConnectivity';
 
 export default function AccountPage({ setPage }: PageProps) { 
   const { width, height } = useWindowDimensions();
@@ -15,6 +17,15 @@ export default function AccountPage({ setPage }: PageProps) {
     require('../assets/cartoonpfp-4.jpg'),
   ];
 
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  
+    useEffect(() => {
+      async function logUserInfo() {
+        setUserInfo(await get_user_information());
+      }
+  
+      logUserInfo();
+    }, []);
 
   return (
     <View style={styles.container}>
@@ -26,13 +37,13 @@ export default function AccountPage({ setPage }: PageProps) {
         <Pressable onPress={() => setIsModalVisible(true)}>
           <View style={styles.avatarContainer}>
             <Image 
-              source={require('../assets/cartoonpfp.jpg')} // Main page picture (unchanged for now as requested)
+              source={userInfo ? { uri: userInfo.ProfilePicture } : alternativePfps[0]} // Main page picture (unchanged for now as requested)
               style={styles.avatar} 
             />
           </View>
         </Pressable>  
 
-        <Text style={styles.userName}>whupazz</Text>
+        <Text style={styles.userName}>{userInfo ? userInfo.Username : ""}</Text>
         
         <View style={styles.levelRow}>
           <Text style={styles.levelText}>level 4</Text>
