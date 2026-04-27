@@ -26,7 +26,7 @@ const LESSON_STEPS = [
   {
     type: 'theory',
     title: 'what is a function?',
-    theory_text: 'a function is a reusable block of coe that performs a specific task. you may think of it like a machine. you provide optional input, it performs action and may return the result.\n\nfunctions help making programs cleaner, shorter and easier to understand.'
+    theory_text: 'a function is a reusable block of code that performs a specific task. you may think of it like a machine. you provide optional input, it performs action and may return the result.\n\nfunctions help making programs cleaner, shorter and easier to understand.'
   },
 
   {
