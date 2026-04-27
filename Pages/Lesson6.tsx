@@ -24,7 +24,7 @@ import MultiChoice from '../Molecules/MultiChoice';
 const LESSON_STEPS = [
   {
     type: 'theory',
-    title: 'what are the loops?',
+    title: 'what are loops?',
     theory_text: 'loops allow your program to repeat actions without writing the same code multiple times. python has two main types:\nfor loops (sequential)\nwhile loops (conditional)'
   },
 
@@ -54,7 +54,7 @@ const LESSON_STEPS = [
 
   {
     type: 'multichoice',
-    title: 'find an infinite loop',
+    title: 'find the infinite loop',
     options: [
       { text: 'n = 3\nwhile n = 3:\n   print("n")', correct: true },
       { text: 'while False\n   print("true")', correct: false },
