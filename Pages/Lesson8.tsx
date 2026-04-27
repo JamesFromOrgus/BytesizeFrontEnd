@@ -24,7 +24,7 @@ const LESSON_STEPS = [
   {
     type: 'theory',
     title: 'what is input?',
-    theory_text: 'in python the input() function allows the user to type something into the program.\n\nname = input("Enter your name: ")\n\nimportant to note that every value made through input() is a string, even if you type number.'
+    theory_text: 'in python the input() function allows the user to type something into the program.\n\nname = input("Enter your name: ")\n\nimportant to note that every value made through input() is a string, even if you enter a number.'
   },
 
   {
@@ -60,7 +60,7 @@ const LESSON_STEPS = [
   {
     type: 'theory',
     title: 'common input error',
-    theory_text: 'users may enter something invalid sometimes into a field. which will cause ValueError, later these can be handled with try/except.'
+    theory_text: 'users may enter something invalid into a field sometimes. this will cause a ValueError.\nin a later lesson, these can be handled with try/except.'
   },
 
   {
@@ -75,16 +75,16 @@ const LESSON_STEPS = [
 
   {
     type: 'multichoice',
-    title: 'what is the issue with the following code? donation = int(input" enter your donation aount"))',
+    title: 'what is the issue with the following code? donation = int(input" enter your donation amount"))',
     options: [
       { text: 'missing bracket after input', correct: true },
-      { text: 'missing coma', correct: false }
+      { text: 'missing comma', correct: false }
     ]
   },
 
   {
     type: 'multichoice',
-    title: 'in booleans an empty string is false',
+    title: 'in boolean, an empty string is false',
     options: [
       { text: 'true', correct: true },
       { text: 'false', correct: false }
