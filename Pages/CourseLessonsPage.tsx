@@ -3,103 +3,35 @@ import { ScrollView, StyleSheet, Text, View, Pressable, Image } from 'react-nati
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
-
-// Each lesson maps its id to the page name that should be navigated to.
-// When you create Lesson2, Lesson3, etc., add them to the pages map in App.tsx
-// and update the pageKey here.
-const lessons = [
-  {
-    id: '1',
-    title: 'lesson 1\nintroduction',
-    description:
-      'in this lesson we will introduce you to python, its basics and application, and how to get started.',
-    status: 'not started',
-    pageKey: 'lesson1',
-  },
-  {
-    id: '2',
-    title: 'lesson 2\nvariables',
-    description:
-      'learn how variables work in python and how they store and manipulate data.',
-    status: 'not started',
-    pageKey: 'lesson2',
-  },
-  {
-    id: '3',
-    title: 'lesson 3\nsimple\noperators',
-    description:
-      'learn about special symbols in python that perform actions on values and variables.',
-    status: 'not started',
-    pageKey: 'lesson3',
-  },
-  {
-    id: '4',
-    title: 'lesson 4\nadvanced\noperators',
-    description:
-      'learn about advanced special symbols in python that perform actions on values and variables.',
-    status: 'not started',
-    pageKey: 'lesson4',
-  },
-  {
-    id: '5',
-    title: 'lesson 5\nconditionals',
-    description:
-      'learn about conditional statements in python to make program decisions.',
-    status: 'not started',
-    pageKey: 'lesson5',
-  },
-  {
-    id: '6',
-    title: 'lesson 6\nsimple\nloops',
-    description:
-      'in this lesson you will learn how to use loops with python, and demistify for and while keywords.',
-    status: 'not started',
-    pageKey: 'lesson6',
-  },
-  {
-    id: '7',
-    title: 'lesson 7\nadvanced\nloops',
-    description:
-      'in this lesson you will learn how to use advanced loops with python, and demistify for and while keywords.',
-    status: 'not started',
-    pageKey: 'lesson7',
-  },
-  {
-    id: '8',
-    title: 'lesson 8\ninput',
-    description:
-      'this lesson will teach you how to take input from users and apply it in your programs.',
-    status: 'not started',
-    pageKey: 'lesson8',
-  },
-  {
-    id: '9',
-    title: 'lesson 9\nfunctions\npart 1',
-    description: 'learn how to use functions in python.',
-    status: 'not started',
-    pageKey: 'lesson9',
-  },
-  {
-    id: '10',
-    title: 'lesson 10\nadvanced\nfunctions',
-    description: 'learn how to use functions in python extensively.',
-    status: 'not started',
-    pageKey: 'lesson10',
-  },
-  {
-    id: '11',
-    title: 'lesson 11\nlists',
-    description: 'learn how to use lists and data structures in python.',
-    status: 'not started',
-    pageKey: 'lesson11',
-  },
-] as const;
-
-// The pageKey values used above must all be registered in App.tsx's `pages` map.
-// Type cast via `as const` lets TypeScript infer the narrow union.
-type LessonPageKey = typeof lessons[number]['pageKey'];
+import { useProgress } from '../ProgressContext';
 
 export default function CoursePage({ setPage }: PageProps) {
+
+  // Load the state from ProgressContext.tsx
+  const { courseLessons, setCourseLessons, setActiveLessonId } = useProgress();
+
+
+  // Updates the status of each lesson to "in progress" when the start button is pressed
+  const handleStartLesson = (id: string, pageKey: any) => {
+    // Tells the global context which lesson we are taking
+    setActiveLessonId(id);
+    
+    // updating the status of this lesson to "in progress"
+    // (but only if it hasn't been completed yet)
+    setCourseLessons((prevLessons) =>
+      prevLessons.map((lesson) => {
+        if (lesson.id === id && lesson.status === 'not started') {
+          return { ...lesson, status: 'in progress' };
+        }
+
+        return lesson;
+      })
+    );
+    
+    // setting the current page to the lesson pressed
+    setPage(pageKey);
+  };
+
   return (
     <View style={styles.background}>
       <StatusBar style="auto" />
@@ -132,34 +64,49 @@ export default function CoursePage({ setPage }: PageProps) {
         contentContainerStyle={styles.carousel}
         style={styles.carousel_container}
       >
-        {lessons.map((item) => (
-          <View key={item.id} style={styles.lesson_card}>
-            <Text style={styles.lesson_title}>{item.title}</Text>
+        {courseLessons.map((item: any) => {
+          // setting of colours and status for the lessons
+          let badgeColor = styleVariables.orange;
+          let badgeLabelColor = styleVariables.white;
 
-            {/* Status badge */}
-            <Button
-              text={item.status}
-              color={styleVariables.orange}
-              height={24}
-              width={96}
-              action={() => {}}
-            />
+          if (item.status === 'in progress') {
+            badgeColor = styleVariables.white;
+            badgeLabelColor = styleVariables.black;
+          } else if (item.status === 'complete') {
+            badgeColor = styleVariables.green;
+            badgeLabelColor = styleVariables.white;
+          }
+
+          return (
+            <View key={item.id} style={styles.lesson_card}>
+              <Text style={styles.lesson_title}>{item.title}</Text>
+
+              {/* Status badge (Now read-only) */}
+              <Button
+                text={item.status}
+                color={badgeColor} // dependent on current status of lesson
+                label_color={badgeLabelColor} // dependent on current status of lesson
+                height={24}
+                width={96}
+                action={() => {}}
+              />
 
             <View style={styles.statLine} />
 
             <Text style={styles.lesson_description}>{item.description}</Text>
 
-            {/* "start" navigates to the lesson-specific page */}
-            <Button
-              text="start"
-              label_color={styleVariables.black}
-              color={styleVariables.white}
-              height={36}
-              width={219}
-              action={() => setPage(item.pageKey as any)}
-            />
-          </View>
-        ))}
+              {/* "start" navigates to the lesson-specific page and sets the active ID */}
+              <Button
+                text="start"
+                label_color={styleVariables.black}
+                color={styleVariables.white}
+                height={36}
+                width={219}
+                action={() => handleStartLesson(item.id, item.pageKey as any)} // sets id of lesson
+              />
+            </View>
+          );
+        })}
       </ScrollView>
     </View>
   );

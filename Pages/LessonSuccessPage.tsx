@@ -1,8 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import { useEffect } from 'react';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
+import { useProgress } from '../ProgressContext';
 
 const { width } = Dimensions.get('window');
 
@@ -11,6 +13,13 @@ export default function LessonSuccessPage({ setPage }: PageProps) {
   const goalXP = 5000;
   const gainedXP = goalXP - currentXP;
   const fillPercent = Math.max(0, Math.min(1, currentXP / goalXP));
+
+  const { completeActiveLesson } = useProgress();
+
+  // start completion logic once when this page loads
+  useEffect(() => {
+    completeActiveLesson();
+  }, []);
 
   return (
     <View style={styles.background}>

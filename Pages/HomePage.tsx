@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView, Pressable, Animated } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable, Animated, Image } from 'react-native';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
@@ -7,9 +7,12 @@ import { PageProps } from '../App';
 import { get_user_information, UserInfo } from '../BackendConnectivity';
 import { useEffect, useState } from 'react';
 
+// Importing global progress state
+import { useProgress } from '../ProgressContext';
+
 // Course examples
 const COURSES = [
-  { id: '1', title: 'python development', lessons: 20, color: styleVariables.orange },
+  { id: '1', title: 'python for beginners', lessons: 20, color: styleVariables.orange },
   // { id: '2', title: 'computer architectures', lessons: 12, color: styleVariables.orange },
   // { id: '3', title: 'further mathematics', lessons: 4, color: styleVariables.blue },
   // { id: '4', title: 'statistical analysis', lessons: 67, color: styleVariables.blue },
@@ -19,6 +22,9 @@ const COURSES = [
 
 export default function HomePage({ setPage }: PageProps) {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  
+  // Pulling python for beginner's lessons from the global context
+  const { courseLessons } = useProgress();
 
   useEffect(() => {
     async function logUserInfo() {
@@ -27,6 +33,13 @@ export default function HomePage({ setPage }: PageProps) {
 
     logUserInfo();
   }, []);
+
+
+  // This calulates the progress percentage based on completed lessons as set
+  const totalLessons = courseLessons.length > 0 ? courseLessons.length : 1;
+  const completedLessons = courseLessons.filter(lesson => lesson.status === 'complete').length;
+  const progressPercent = `${(completedLessons / totalLessons) * 100}%`;
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -36,10 +49,11 @@ export default function HomePage({ setPage }: PageProps) {
           <View style={styles.badge}>
             <Text style={styles.badgeText}>in progress</Text>
           </View>
-          <Text style={styles.featuredTitle}>single variable calculus for beginners</Text>
+          <Text style={styles.featuredTitle}>python for beginners</Text>
 
           <View style={styles.progressBar}>
-            <Animated.View style={[StyleSheet.absoluteFill, {backgroundColor: styleVariables.black, width: "0%"}]}/>
+            {/* width is changed by the progressPercent variable*/}
+            <Animated.View style={[StyleSheet.absoluteFill, {backgroundColor: styleVariables.black, width: progressPercent}]}/>
           </View>
 
           <View style={styles.centerButton}>
@@ -49,7 +63,7 @@ export default function HomePage({ setPage }: PageProps) {
                 label_color={styleVariables.black} 
                 width={280}
                 height={40}
-                action={() => {}} 
+                action={() => setPage('course')} 
             />
           </View>
         </View>
@@ -69,7 +83,13 @@ export default function HomePage({ setPage }: PageProps) {
             }
           ]}
         >
-          <View style={styles.iconBox} />
+          <View style={styles.iconBox}>
+            <Image 
+              source={require('../assets/course-icon.png')}
+              style={styles.courseIconImage}
+              resizeMode="contain"
+            />
+          </View>
           <View>
             <Text style={styles.courseTitle}>{course.title}</Text>
             <Text style={styles.courseSub}>{course.lessons} lessons</Text>
@@ -120,7 +140,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   badge: {
-    backgroundColor: styleVariables.white,
+    backgroundColor: styleVariables.orange,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 12,
@@ -131,6 +151,7 @@ const styles = StyleSheet.create({
   },
   badgeText: {
     fontFamily: 'Montserrat_600SemiBold',
+    color: styleVariables.white,
     fontSize: 12,
   },
   featuredTitle: {
@@ -160,8 +181,14 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     backgroundColor: styleVariables.black,
-    borderRadius: 4,
+    borderRadius: 12,
     marginRight: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  courseIconImage: {
+    width: 16,
+    height: 16,
   },
   courseTitle: {
     fontFamily: 'Montserrat_600SemiBold',
