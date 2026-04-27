@@ -80,7 +80,7 @@ const LESSON_STEPS = [
   },
   {
     type: 'theory',
-    title: 'ide challenge: drade evaluator',
+    title: 'ide challenge: grade evaluator',
     theory_text:
       'time to practice in your ide! write a program using if/elif/else statements that takes a score (0–100) and prints the correct grade:\n\n• 90–100 → "A"\n• 80–89 → "B"\n• 70–79 → "C"\n• 60–69 → "D"\n• Below 60 → "F"\n\nbonus: if the score is outside the 0–100 range, print "invalid score"!',
   },
