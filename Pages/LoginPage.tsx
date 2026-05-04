@@ -1,27 +1,86 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, StyleSheet, Text, View, Pressable, Alert } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Image, useWindowDimensions } from 'react-native';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import InputBox from '../Atoms/InputBox';
 import { PageProps } from '../App';
 import { useState } from 'react';
 
+import { attempt_login } from '../BackendConnectivity';
+
 export default function LoginPage( {setPage}: PageProps) {
   const [errorMsg, setError] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { height,width } = useWindowDimensions(); // Needed for fine control on adataptive sizing for elements
+
+  async function handleLogin() {
+    console.log("Pressed login.")
+    setError('');
+
+    const token = await attempt_login(username, password);
+
+    if (token) {
+      console.log("Login successful:", token);
+      setPage('onboarding');
+    } else {
+      setError('Invalid username or password');
+    }
+  }
+  
   return (
     <View style={styles.background}>
+      {/* Asset Import 
+      bytesize. pattern */}
+
+      <Image source={require('../assets/pattern-black.png')}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: width,
+          height: 107,
+          zIndex: -10,
+        }}
+        resizeMode="cover"
+        />
+
+      {/* Bottom Background Graph */}
+      <Image 
+        source={require('../assets/graph-cat.png')}
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          width: width * 0.9, 
+          aspectRatio: 1, 
+          zIndex: -10, 
+        }}
+       resizeMode="contain" 
+      />
+
       <View style={{width: 300}}>
         <Text style={[styles.logo_text, {color: styleVariables.orange}]}>return<Text style={[styles.logo_text]}>ing user?</Text></Text>
       </View>
       <View style={{gap: 20, marginTop: 24}}>
-        <InputBox placeholder_text='username/email'/>
-        <InputBox placeholder_text='password' autocomplete_hint='current-password' obfuscated={true}/>
-        <Button text={'login'} color={styleVariables.green} width={300} action={function (): void {
-          setError("Not yet implemented.")
-        }}/>
-        <Button text={'back'} color={styleVariables.orange} height={30} width={60} action={function (): void {
-          setPage('start');
-        }}/>
+        <InputBox
+          placeholder_text='username/email'
+          autocomplete_hint='username'
+          value={username}
+          onChangeText={setUsername}
+        />
+        <InputBox
+          placeholder_text='password'
+          autocomplete_hint='current-password'
+          obfuscated={true}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <Button
+          text={'login'}
+          color={styleVariables.green}
+          width={300}
+          action={handleLogin}
+        />
       </View>
       {errorMsg.length > 0 && <Text style={styles.error_text}>Error: {errorMsg}</Text>}
       <StatusBar style="auto" />
@@ -35,6 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: styleVariables.white,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: -100
   },
   logo_text: {
     fontSize: 36,

@@ -1,0 +1,26 @@
+# this asterisk means everything is excluded by default because i don't want us messing with each other's project files
+*
+
+!.gitignore
+
+# directories + children
+!Atoms/
+!Atoms/**
+
+!Molecules/
+!Molecules/**
+
+!Pages/
+!Pages/**
+
+!assets/
+!assets/**
+
+# files
+!App.tsx
+!index.ts
+!StyleVariables.tsx
+!BackendConnectivity.tsx
+!ProgressContext.tsx
+
+# feel free to add to this
