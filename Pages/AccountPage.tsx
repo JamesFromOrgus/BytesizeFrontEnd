@@ -5,27 +5,43 @@ import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 
-import { get_user_information, UserInfo } from '../BackendConnectivity';
+import { get_user_information, UserInfo, change_password, get_level_information, LevelInfo, StatInfo, get_statistics, change_icon } from '../BackendConnectivity';
 
 export default function AccountPage({ setPage }: PageProps) { 
   const { width, height } = useWindowDimensions();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedPfp, setSelectedPfp] = useState(require('../assets/cartoonpfp.jpg')); // variable to track the picture currently being held as selected
-  const alternativePfps = [
+  //const [selectedPfp, setSelectedPfp] = useState(require('../assets/cartoonpfp.jpg')); // variable to track the picture currently being held as selected
+  const pfps = [
+    require('../assets/cartoonpfp.jpg'),
     require('../assets/cartoonpfp-2.jpg'),
     require('../assets/cartoonpfp-3.jpg'),
     require('../assets/cartoonpfp-4.jpg'),
   ];
+  const [iconDraft, setIconDraft] = useState(pfps[0]);
+  const [iconDraftID, setIconDraftID] = useState(0);
 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [levelInfo, setLevelInfo] = useState<LevelInfo | null>(null)
+  const [statInfo, setStatInfo] = useState<StatInfo | null>(null)
+
+  async function load() {
+      const [user, level, stats] = await Promise.all([
+        get_user_information(),
+        get_level_information(),
+        get_statistics()
+      ]);
+
+      setUserInfo(user);
+      setLevelInfo(level);
+      setStatInfo(stats);
+    }
   
-    useEffect(() => {
-      async function logUserInfo() {
-        setUserInfo(await get_user_information());
-      }
-  
-      logUserInfo();
-    }, []);
+  useEffect(() => {load();}, []);
+
+  async function setSelectedPfp(index: number) {
+    change_icon(index);
+    load();
+  }
 
   return (
     <View style={styles.container}>
@@ -37,7 +53,7 @@ export default function AccountPage({ setPage }: PageProps) {
         <Pressable onPress={() => setIsModalVisible(true)}>
           <View style={styles.avatarContainer}>
             <Image 
-              source={userInfo ? { uri: userInfo.ProfilePicture } : alternativePfps[0]} // Main page picture (unchanged for now as requested)
+              source={userInfo ? { uri: userInfo.ProfilePicture } : pfps[0]} // Main page picture
               style={styles.avatar} 
             />
           </View>
@@ -46,17 +62,20 @@ export default function AccountPage({ setPage }: PageProps) {
         <Text style={styles.userName}>{userInfo ? userInfo.Username : ""}</Text>
         
         <View style={styles.levelRow}>
-          <Text style={styles.levelText}>level 4</Text>
-          <Text style={[styles.levelText, { color: 'grey' }]}>level 5</Text>
+          <Text style={styles.levelText}> {"level " + ((levelInfo?.level ?? 0)).toString()} </Text>
+          <Text style={[styles.levelText, { color: 'grey' }]}> {"level " + ((levelInfo?.level ?? 0) + 1).toString()} </Text>
         </View>
 
         <View style={styles.progressBar}>
-          <Animated.View style={[StyleSheet.absoluteFill, {backgroundColor: styleVariables.green, width: "50%"}]}/>
+          <Animated.View style={[StyleSheet.absoluteFill, {
+            backgroundColor: styleVariables.green,
+            width: `${levelInfo == null ? 0 : ((levelInfo.experience - levelInfo.lastRequiredExperience) / (levelInfo.nextRequiredExperience - levelInfo.lastRequiredExperience)) * 100}%`}]}
+          />
         </View>
 
         <View style={styles.xpRow}>
-          <Text style={styles.xpText}>3236xp</Text>
-          <Text style={styles.xpText}>6550xp</Text>
+          <Text style={styles.xpText}> {((levelInfo?.lastRequiredExperience ?? 0)).toString()+"xp"} </Text>
+          <Text style={styles.xpText}> {((levelInfo?.nextRequiredExperience ?? 0)).toString()+"xp"} </Text>
         </View>
       </View>
 
@@ -66,13 +85,19 @@ export default function AccountPage({ setPage }: PageProps) {
         <View style={styles.statLine} /> 
 
         <View style={styles.statRow}>
-          <Text style={styles.statLabel}>lessons completed: <Text style={styles.statValue}>67</Text></Text>
+          <Text style={styles.statLabel}>lessons completed: <Text style={styles.statValue}>{statInfo?.LessonCount ?? 0}</Text></Text>
         </View>
-        <View style={styles.statRow}>
+        {/* <View style={styles.statRow}>
           <Text style={styles.statLabel}>courses completed: <Text style={styles.statValue}>5</Text></Text>
-        </View>
+        </View> */}
         <View style={styles.statRow}>
-          <Text style={styles.statLabel}>first lesson: <Text style={styles.statValue}>4/5/2026</Text></Text>
+          <Text style={styles.statLabel}>join date: <Text style={styles.statValue}>
+            {statInfo ?
+            (statInfo.JoinDate.getDate()+1).toString() + "/" +
+            (statInfo.JoinDate.getMonth()+1).toString() + "/" +
+            statInfo.JoinDate.getFullYear().toString()
+            : "1/1/1970"}
+            </Text></Text>
         </View>
       </View>
 
@@ -128,7 +153,7 @@ export default function AccountPage({ setPage }: PageProps) {
               
               {/*Selected avatar */}
               <View style={styles.modal_big_avatar_container}>
-                <Image source={selectedPfp} style={styles.avatar} />
+                <Image source={iconDraft} style={styles.avatar} />
               </View>
             </View>
 
@@ -140,10 +165,13 @@ export default function AccountPage({ setPage }: PageProps) {
             <View style={styles.modal_bottom_section}>
               {/*Row of other profile pictures */}
               <View style={styles.pfp_options_row}>
-                {alternativePfps.map((img, index) => (
+                {pfps.map((img, index) => (
                   <Pressable 
                     key={index} 
-                    onPress={() => setSelectedPfp(img)} // Updates the big picture in the modal
+                    onPress={() => {
+                      setIconDraft(pfps[index]);
+                      setIconDraftID(index);
+                    }} // Updates the big picture in the modal
                     style={styles.modal_small_avatar_container}
                   >
 
@@ -153,7 +181,10 @@ export default function AccountPage({ setPage }: PageProps) {
               </View>
 
               {/*Save Button */}
-              <Pressable style={styles.modal_save_button} onPress={() => setIsModalVisible(false)}>
+              <Pressable style={styles.modal_save_button} onPress={() => {
+                setSelectedPfp(iconDraftID);
+                setIsModalVisible(false);
+              }}>
                 <Text style={styles.modal_save_text}>save changes</Text>
               </Pressable>
 

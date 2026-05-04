@@ -5,10 +5,27 @@ import styleVariables from '../StyleVariables';
 import Button from '../Atoms/Button';
 import { PageProps } from '../App';
 
-import { get_user_information, UserInfo, logout } from '../BackendConnectivity';
+import { get_user_information, UserInfo, logout, UserInfoUpdate, change_password, set_user_information } from '../BackendConnectivity';
+
+function parseDMY(dateStr: string): Date {
+    const [day, month, year] = dateStr.split("/").map(Number);
+
+    return new Date(year, month - 1, day);
+}
+
+function parseName(name: string): [string, string] | null {
+    const names = name.trim().split(" ");
+    if (names.length < 2) return null;
+
+    return [names[0], names[1]];
+}
 
 export default function SettingsPage({ setPage }: PageProps) {
- const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [newPassword, setNewPassword] = useState("");
+  const [newName, setNewName] = useState("");
+  const [newDOB, setNewDOB] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   useEffect(() => {
     async function logUserInfo() {
@@ -36,25 +53,25 @@ export default function SettingsPage({ setPage }: PageProps) {
         
         {/*User Data */}
         <View style={styles.account_info_container}>
-          <Text style={styles.info_line}> <Text style={styles.label}>name:</Text>
+          <Text style={styles.info_line}> <Text style={styles.label}>name: </Text>
             <Text style={styles.value}>
-              {userInfo ? userInfo.FirstName + userInfo.LastName : "john doe" }
+              {userInfo ? userInfo.FirstName + " " + userInfo.LastName : "john doe" }
             </Text>
           </Text>
-          <Text style={styles.info_line}> <Text style={styles.label}>email:</Text> 
+          <Text style={styles.info_line}> <Text style={styles.label}>email: </Text> 
             <Text style={styles.value}> 
               {userInfo && userInfo.EmailAddress != "" ? userInfo.EmailAddress : "not added"} 
             </Text>
           </Text>
-          <Text style={styles.info_line}><Text style={styles.label}>dob:</Text> <Text style={styles.value}>
+          <Text style={styles.info_line}><Text style={styles.label}>dob: </Text> <Text style={styles.value}>
             {userInfo && userInfo.DateOfBirth ?
-            userInfo.DateOfBirth.getDate().toString() + "/" +
+            (userInfo.DateOfBirth.getDate()+1).toString() + "/" +
             (userInfo.DateOfBirth.getMonth()+1).toString() + "/" +
             userInfo.DateOfBirth.getFullYear().toString()
             : "not added"}
             </Text></Text>
-          <Text style={styles.info_line}><Text style={styles.label}>password:</Text> <Text style={styles.value}>.......</Text></Text>
-          <Text style={styles.info_line}><Text style={styles.label}>profile:</Text> <Text style={styles.value}>private</Text></Text>
+          <Text style={styles.info_line}><Text style={styles.label}>password: </Text> <Text style={styles.value}>.......</Text></Text>
+          <Text style={styles.info_line}><Text style={styles.label}>profile: </Text> <Text style={styles.value}>private</Text></Text>
         </View>
 
         {/* Edit Button */}
@@ -64,24 +81,7 @@ export default function SettingsPage({ setPage }: PageProps) {
         </Pressable>
       </View>
 
-      {/*Accessibility section */}
-      <View style={[styles.section_container, { width: width * 0.85 }]}>
-        <Text style={styles.section_title}>accessibility</Text>
-        <View style={styles.divider} />
-        
-        <View style={styles.access_row}>
-          <Text style={styles.label}>dark mode</Text>
-          
-          {/* Custom Switch uses operators (condition ? true:false) to move the thumb left/right */}
-          <Pressable 
-            style={[styles.custom_switch, darkMode ? styles.switch_on:styles.switch_off]} 
-            onPress={() => setDarkMode(!darkMode)}
-          >
-            <View style={[styles.switch_thumb, darkMode ? styles.thumb_on:styles.thumb_off]}/>
-
-          </Pressable>
-        </View>
-      </View>
+      
 
       {/* bottom navigation*/}
       <View style={styles.navBar}>
@@ -125,26 +125,29 @@ export default function SettingsPage({ setPage }: PageProps) {
             <View style={styles.modal_section}>
               <Text style={styles.modal_label}>name</Text>
               <View style={styles.modal_line} />
-              <TextInput style={styles.modal_input} placeholder="enter new name" placeholderTextColor="styleVariables.grey" />
+              <TextInput style={styles.modal_input} placeholder="enter new name" placeholderTextColor="styleVariables.grey" value={newName} onChangeText={setNewName} />
             </View>
 
             <View style={styles.modal_section}>
               <Text style={styles.modal_label}>email</Text>
               <View style={styles.modal_line} />
               {/*keyboardType="email-address" gives the @ symbol quickly on the mobile keyboard */}
-              <TextInput style={styles.modal_input} placeholder="enter new email" placeholderTextColor="styleVariables.grey" keyboardType="email-address" />
+              <TextInput style={styles.modal_input} placeholder="enter new email" placeholderTextColor="styleVariables.grey" keyboardType="email-address"
+              value={newEmail} onChangeText={setNewEmail} />
             </View>
 
             <View style={styles.modal_section}>
               <Text style={styles.modal_label}>date of birth</Text>
               <View style={styles.modal_line} />
-              <TextInput style={styles.modal_input} placeholder="enter new dob" placeholderTextColor="styleVariables.grey" />
+              <TextInput style={styles.modal_input} placeholder="enter new dob" placeholderTextColor="styleVariables.grey" 
+              value={newDOB} onChangeText={setNewDOB}/>
             </View>
 
             <View style={styles.modal_section}>
               <Text style={styles.modal_label}>password</Text>
               <View style={styles.modal_line} />
-              <TextInput style={styles.modal_input} placeholder="enter new password" placeholderTextColor="styleVariables.grey" secureTextEntry={true} />
+              <TextInput style={styles.modal_input} placeholder="enter new password" placeholderTextColor="styleVariables.grey" secureTextEntry={true}
+              value={newPassword} onChangeText={setNewPassword} />
             </View>
 
 
@@ -157,7 +160,28 @@ export default function SettingsPage({ setPage }: PageProps) {
             </View>
 
             {/*Save Button */}
-            <Pressable style={styles.green_modal_button} onPress={() => setIsModalVisible(false)}>
+            <Pressable style={styles.green_modal_button}
+            onPress={async () => {
+              console.log("Pressed save")
+              const names = parseName(newName);
+
+              await set_user_information({
+                DateOfBirth: newDOB ? parseDMY(newDOB) : undefined,
+                FirstName: names ? names[0] : undefined,
+                LastName: names ? names[1] : undefined,
+                EmailAddress: newEmail != "" ? newEmail : undefined
+              })
+
+              if (newPassword.trim() !== "") {
+                console.log(newPassword);
+                await change_password(newPassword);
+                setPage("start");
+                setIsModalVisible(false);
+              } else {
+                setPage("account");
+                setIsModalVisible(false);
+              }
+            }}>
               <Text style={styles.modal_button_text}>save changes</Text>
 
               {/*Figure out what the hell is going on when jump to onboarding or login page (might have something to do with app.tsx scroll being weird) */}

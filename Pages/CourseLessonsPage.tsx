@@ -4,6 +4,7 @@ import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 import { useProgress } from '../ProgressContext';
+import { start_lesson } from '../BackendConnectivity';
 
 export default function CoursePage({ setPage }: PageProps) {
 
@@ -15,6 +16,8 @@ export default function CoursePage({ setPage }: PageProps) {
   const handleStartLesson = (id: string, pageKey: any) => {
     // Tells the global context which lesson we are taking
     setActiveLessonId(id);
+    const int_id = parseInt(id);
+    start_lesson(int_id);
     
     // updating the status of this lesson to "in progress"
     // (but only if it hasn't been completed yet)

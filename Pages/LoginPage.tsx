@@ -15,6 +15,7 @@ export default function LoginPage( {setPage}: PageProps) {
   const { height,width } = useWindowDimensions(); // Needed for fine control on adataptive sizing for elements
 
   async function handleLogin() {
+    console.log("Pressed login.")
     setError('');
 
     const token = await attempt_login(username, password);

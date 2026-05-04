@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Pressable } from 'react-native';
 import styleVariables from '../StyleVariables';
 import Button from '../Atoms/Button';
 import { useState } from 'react';
+import { complete_question } from '../BackendConnectivity';
 
 // Each option carries the display text and whether it is the correct answer
 export type OptionItem = {
@@ -30,6 +31,7 @@ export default function MultiChoice({ title, options, callback }: MultiChoiceDat
     if (selectedIndex === null || submitted) return;
     setSubmitted(true);
     callback(options[selectedIndex].correct);
+    if (options[selectedIndex].correct) complete_question(true);
   };
 
   const handleRetry = () => {

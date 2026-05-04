@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import styleVariables from '../StyleVariables';
 import { useState } from 'react';
+import { complete_question } from '../BackendConnectivity';
 
 type MatchPair = {
   term: string;
@@ -51,6 +52,7 @@ export default function MatchTermToDefinition({ title, pairs, callback }: MatchT
   const handleSubmit = () => {
     const correct = pairs.every(p => matched[p.term] === p.definition);
     setIsCorrect(correct);
+    if (correct) complete_question(true);
     setSubmitted(true);
     callback(correct);
   };

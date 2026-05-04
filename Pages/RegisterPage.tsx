@@ -5,10 +5,28 @@ import styleVariables from '../StyleVariables';
 import InputBox from '../Atoms/InputBox';
 import { PageProps } from '../App';
 import { useState } from 'react';
+import { attempt_register } from '../BackendConnectivity';
 
 export default function RegisterPage({ setPage }: PageProps) {
-    const [errorMsg, setError] = useState('')
-    const { height,width } = useWindowDimensions(); // Needed for fine control on adataptive sizing for elements 
+    const [errorMsg, setError] = useState('');
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const { height,width } = useWindowDimensions(); // Needed for fine control on adataptive sizing for elements
+    
+    async function handleRegister() {
+        console.log("Pressed register.")
+        setError('');
+    
+        const token = await attempt_register(email, username, password);
+    
+        if (token) {
+          console.log("Login successful:", token);
+          setPage('onboarding');
+        } else {
+          setError('Invalid credentials');
+        }
+      }
     
     return (
     <View style={styles.background}>
@@ -47,11 +65,10 @@ export default function RegisterPage({ setPage }: PageProps) {
         <Text style={[styles.logo_text, {color: styleVariables.orange}]}>def <Text style={[styles.logo_text]}>create_user():</Text></Text>
       </View>
       <View style={{gap: 20, marginTop: 24}}>
-        <InputBox placeholder_text='email' autocomplete_hint='email'/>
-        <InputBox placeholder_text='username'/>
-        <InputBox placeholder_text='password' obfuscated={true} autocomplete_hint='new-password'/>
-        <Button text={'register'} color={styleVariables.green} width={300} action={function (): void { setPage('onboarding')
-        }}/>
+        <InputBox placeholder_text='email' autocomplete_hint='email' onChangeText={setEmail} value={email}/>
+        <InputBox placeholder_text='username' onChangeText={setUsername} value={username}/>
+        <InputBox placeholder_text='password' obfuscated={true} autocomplete_hint='new-password' onChangeText={setPassword} value={password}/>
+        <Button text={'register'} color={styleVariables.green} width={300} action={handleRegister}/>
       </View>
       {errorMsg.length > 0 && <Text style={styles.error_text}>Error: {errorMsg}</Text>}
       <StatusBar style="auto" />

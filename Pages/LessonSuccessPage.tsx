@@ -1,18 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../Atoms/Button';
 import styleVariables from '../StyleVariables';
 import { PageProps } from '../App';
 import { useProgress } from '../ProgressContext';
 
+import { get_level_information, LevelInfo, pre_lesson_exp } from '../BackendConnectivity';
+
 const { width } = Dimensions.get('window');
 
 export default function LessonSuccessPage({ setPage }: PageProps) {
-  const currentXP = 3566;
-  const goalXP = 5000;
-  const gainedXP = goalXP - currentXP;
-  const fillPercent = Math.max(0, Math.min(1, currentXP / goalXP));
+  const [levelInfo, setLevelInfo] = useState<LevelInfo | null>(null)
+    
+  useEffect(() => {
+    async function load() {
+      const level = await get_level_information();
+
+      setLevelInfo(level);
+    }
+
+    load();
+  }, []);
+
+  const gainedXP = (levelInfo?.experience ?? 0) - pre_lesson_exp;
+  const fillPercent = Math.max(0, Math.min(1, levelInfo == null ? 0 : (levelInfo.experience - levelInfo.lastRequiredExperience) / (levelInfo.nextRequiredExperience - levelInfo.lastRequiredExperience)));
 
   const { completeActiveLesson } = useProgress();
 
@@ -29,8 +41,8 @@ export default function LessonSuccessPage({ setPage }: PageProps) {
         <Text style={styles.subtitle}>{`+${gainedXP} xp`}</Text>
 
         <View style={styles.progressRow}>
-          <Text style={styles.levelText}>level 4</Text>
-          <Text style={[styles.levelText, styles.levelTextInactive]}>level 5</Text>
+          <Text style={styles.levelText}> {"level " + (levelInfo?.level ?? 0).toString()} </Text>
+          <Text style={[styles.levelText, styles.levelTextInactive]}>{"level " + ((levelInfo?.level ?? 0)+1).toString()} </Text>
         </View>
 
         <View style={styles.progressBarBackground}>
@@ -38,8 +50,8 @@ export default function LessonSuccessPage({ setPage }: PageProps) {
         </View>
 
         <View style={styles.xpRow}>
-          <Text style={styles.xpText}>{`${currentXP}xp`}</Text>
-          <Text style={styles.xpText}>{`${goalXP}xp`}</Text>
+          <Text style={styles.xpText}>{`${levelInfo?.lastRequiredExperience ?? 0}xp`}</Text>
+          <Text style={styles.xpText}>{`${levelInfo?.nextRequiredExperience ?? 0}xp`}</Text>
         </View>
 
         <Button

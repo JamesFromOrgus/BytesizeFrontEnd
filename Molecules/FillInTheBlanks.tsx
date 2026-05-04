@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TextInput } from 'react-native';
 import styleVariables from '../StyleVariables';
 import Button from '../Atoms/Button';
 import { useState } from 'react';
+import { complete_question } from '../BackendConnectivity';
 
 type FillInTheBlanksData = {
   title: string;
@@ -21,6 +22,7 @@ export default function FillInTheBlanks({ title, prefix, answer, callback }: Fil
     // Trim both sides to avoid whitespace false-negatives
     const correct = value.trim() === answer.trim();
     setIsCorrect(correct);
+    if (correct) complete_question(true);
     setSubmitted(true);
     // Only fire the callback once, on the first submission
     callback(correct);
