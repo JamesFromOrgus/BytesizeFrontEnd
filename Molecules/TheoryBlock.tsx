@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, Pressable, TextInput, TextInputProps } from 'react-native';
+import { useState } from 'react';
 import styleVariables from '../StyleVariables';
 import Button from '../Atoms/Button';
 
@@ -9,6 +10,9 @@ type TheoryBlockData = {
 }
 
 export default function TheoryBlock({ title, theory_text, callback }: TheoryBlockData) {
+    // Add state to track if the button has been pressed
+    const [isPressed, setIsPressed] = useState(false);
+
     return (
         <View style={styles.question_card}>
             <Text style={styles.theory_title}>{title}</Text>
@@ -17,10 +21,17 @@ export default function TheoryBlock({ title, theory_text, callback }: TheoryBloc
             <Button
               text="got it!"
               label_color={styleVariables.white}
-              color={styleVariables.green}
+              // Change color to grey if pressed to indicate it's disabled
+              color={isPressed ? styleVariables.grey : styleVariables.green}
               height={36}
               width={219}
-              action={callback}
+              action={() => {
+                // Only fire the callback and update state if it hasn't been pressed yet
+                if (!isPressed) {
+                  setIsPressed(true);
+                  callback();
+                }
+              }}
             />
           </View>
     )

@@ -63,7 +63,7 @@ const LESSON_STEPS = [
     type: 'fillinblanks',
     title: 'assign the string "hello" to a variable called greeting',
     prefix: 'greeting = ',
-    answer: 'hello',
+    answer: '"hello"',
   },
   {
     type: 'multichoice',

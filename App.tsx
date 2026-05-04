@@ -110,10 +110,25 @@ export default function App() {
       let newStack: PageName[];
       let newIndex: number;
 
-      // Clears login page history and set up left and right swipe for the home to accounts page
-      if (target === 'home') {
-        newStack = ['home', 'account'];
+      // Logout root reset (prevents user from swiping left back into the stack)
+      if (target === 'start') {
+        newStack = ['start'];
         newIndex = 0;
+      }
+      // Clears login page history and sets up home as root
+      else if (target === 'home') {
+        newStack = ['home'];
+        newIndex = 0;
+        
+        // Appends the account page after the transition animation is complete
+        setTimeout(() => {
+          setStack((current) => {
+            if (current.includes('home') && !current.includes('account')) {
+              return ['home', 'account'];
+            }
+            return current;
+          });
+        }, 500); 
       }
       else if (target === 'account') {
         newStack = ['home', 'account'];
@@ -169,7 +184,11 @@ export default function App() {
         // Checks  if we are doing a speciecal main page swipe back
         const isMainPagesSwipe = stack[currentIndex] === 'account' && stack[idx] === 'home';
         
-        if (!isMainPagesSwipe) {
+
+        if (stack[idx] === 'home') {
+          // If user swipes back and lands on home this restores the root state to home
+          setStack(['home', 'account']);
+        } else if (!isMainPagesSwipe) {
           // swipe back
           setStack((prevStack) => prevStack.slice(0, idx + 1));
         }
@@ -206,4 +225,4 @@ export default function App() {
       />
     </ProgressProvider>
   );
-} 
+}
