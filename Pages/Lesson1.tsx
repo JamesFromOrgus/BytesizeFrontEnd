@@ -102,7 +102,7 @@ const LESSON_STEPS = [
   },
   {
     type: 'fillinblanks',
-    title: 'fill in the blanks',
+    title: 'fill in Hello World! message in the blank',
     prefix: 'print',
     answer: '("Hello World!")',
   },
